@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Plans - Greenhouse-systems</title>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">    
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  </head>
+
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark--green">
+      <a class="navbar-brand" href="index.html">Greenhouse Systems(tm)</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="spectrate/status.html">Status</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              History
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="plots.html">Plots</a>
+              <a class="dropdown-item" href="log.html">Log</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="plans/status.html">Plans <span class="sr-only">(current)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="equipment/status.html">Equipment</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <div class="container-fluid">
+      <h1>Plans</h1>
+      <h2>Tulips - plan</h2>
+      <div class="col-sm-1">
+        <table class="table table-striped period">
+          <thead>
+            <tr>
+              <th scope="col">Parameters</th>
+              <th scope="col">Period 1</th>
+              <th scope="col">Period 2</th>
+              <th scope="col">Period 3</th>
+              <th scope="col">Period 4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Duration (hours): </th>
+              <td>120</td>
+              <td>96</td>
+              <td>96</td>
+              <td>96</td>
+            </tr>
+            <tr>
+              <th scope="row">Air temperature: </th>
+              <td>22</td>
+              <td>24</td>
+              <td>26</td>
+              <td>28</td>
+            </tr>
+            <tr>
+              <th scope="row">Humidity: </th>
+              <td>92%</td>
+              <td>86%</td>
+              <td>80%</td>
+              <td>95%</td>
+            </tr>
+            <tr>
+              <th>PH: </th>
+              <td>5.6</td>
+              <td>5.7</td>
+              <td>5.7</td>
+              <td>5.8</td>
+            </tr>
+            <tr>
+              <td colspan="5"><button type="button" class="btn btn-success" style="width: 100%">Add period</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  </body>
+</html>

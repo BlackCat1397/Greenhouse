@@ -1,0 +1,28 @@
+a {
+  color: #090;
+}
+
+table.period{
+  flex: all;
+  border: solid 1px #eee;
+  border-collapse: collapse;
+}
+
+.bg-dark--green {
+  background-color: #030
+  !important;
+}
+
+.warning {
+  background-color: #fc7;
+}
+
+.alert {
+  background-color: #faa;
+}
+
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
