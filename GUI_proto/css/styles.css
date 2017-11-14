@@ -13,16 +13,51 @@ table.period{
   !important;
 }
 
-.warning {
-  background-color: #fc7;
-}
-
-.alert {
-  background-color: #faa;
-}
-
 img.centered {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.state-on {
+  color: green;
+}
+
+.state-off {
+  color: red;
+}
+
+.oi {
+  color: gray;
+}
+
+.oi:hover {
+  color: black;
+}
+
+.draggable {
+  cursor: -webkit-move; /* Chrome 1-21, Safari 4+ */
+  cursor:    -moz-move; /* Firefox 1.5-26 */
+  cursor:         move; /* W3C standards syntax, should come least */
+}
+.draggable:active { 
+  cursor: -webkit-grabbing;
+  cursor:    -moz-grabbing;
+  cursor:         grabbing;
+}/*
+.draggable:target { 
+  cursor: -webkit-grabbing;
+  cursor:    -moz-grabbing;
+  cursor:         grabbing;
+}*/
+
+
+
+.oi {
+  cursor: pointer;
+}
+
+.slip-reordering {
+  /*background-color: blue;*/
+  /*cursor:         grabbing!important;*/
 }

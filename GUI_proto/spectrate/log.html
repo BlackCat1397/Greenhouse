@@ -33,10 +33,10 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="plans/status.html">Plans</a>
+            <a class="nav-link" href="../plans/status.html">Plans</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="equipment/status.html">Equipment</a>
+            <a class="nav-link" href="../equipment/status.html">Equipment</a>
           </li>
         </ul>
       </div>
@@ -47,9 +47,11 @@
     <div class="container-fluid">
       <table class="table table-striped ">
         <tbody>
-          <tr><td class="alert">00:21:41 - Alert from active sensor 2.</td></tr>
-          <tr><td>00:21:43 - Conditioner 2 turned on.</td></tr>
-          <tr><td>00:21:44 - Conditioner 3 turned on.</td></tr>
+          <tr><td class="alert alert-danger">00:21:41 - Alert from active temperature sensor 2.</td></tr>
+          <tr><td>00:21:43 - Conditioner 2 turned <span class="state state-on">on</span>.</td></tr>
+          <tr><td>00:21:44 - Conditioner 3 turned <span class="state state-on">on</span>.</td></tr>
+          <tr><td class="alert alert-warning">00:21:41 - Deviation on passive temperature sensor 3.</td></tr>
+          <tr><td>00:21:44 - Conditioner 3 turned <span class="state state-off">off</span>.</td></tr>
         </tbody>
       </table>
     </div>
