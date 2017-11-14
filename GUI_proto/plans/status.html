@@ -116,6 +116,7 @@
                 if (e.target.classList.contains('demo-no-reorder')) {
                     e.preventDefault();
                 }
+                document.onselectstart = function(){ return false; }
             }, false);
 
             list.addEventListener('slip:beforeswipe', function(e){
@@ -137,6 +138,7 @@
                 return false;
             }, false);
             return new Slip(list);
+            document.onselectstart = function(){ return true; }
         }
         setupSlip(document.getElementById('demo1'));
         
