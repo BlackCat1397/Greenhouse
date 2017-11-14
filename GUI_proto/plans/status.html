@@ -112,14 +112,26 @@
     <script type="text/javascript" src="../js/slip.js"></script>
     <script>
         function setupSlip(list) {
+            var flag_dragging = false;
+            list.addEventListener('mouseover', function(e){
+              document.onselectstart = function(){ return false; }
+            });
+            list.addEventListener('mouseout', function(e){
+              if(!flag_dragging){
+                document.onselectstart = function(){ return true; }
+              }
+            });
+
+
             list.addEventListener('slip:beforereorder', function(e){
+                flag_dragging = true;
                 if (e.target.classList.contains('demo-no-reorder')) {
                     e.preventDefault();
                 }
-                document.onselectstart = function(){ return false; }
             }, false);
 
             list.addEventListener('slip:beforeswipe', function(e){
+                flag_dragging = true;
                 if (e.target.nodeName == 'INPUT' || e.target.classList.contains('demo-no-swipe')) {
                     e.preventDefault();
                 }
@@ -130,15 +142,16 @@
             }, false);
 
             list.addEventListener('slip:afterswipe', function(e){
+                flag_dragging = false;
                 e.target.parentNode.appendChild(e.target);
             }, false);
 
             list.addEventListener('slip:reorder', function(e){
+                flag_dragging = false;
                 e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
                 return false;
             }, false);
             return new Slip(list);
-            document.onselectstart = function(){ return true; }
         }
         setupSlip(document.getElementById('demo1'));
         
