@@ -2,10 +2,15 @@ a {
   color: #090;
 }
 
-table.period{
+table.plan{
   flex: all;
   border: solid 1px #eee;
   border-collapse: collapse;
+}
+@media only screen and (min-width : 680px) {
+  table.plan {
+    display: inline-table;  
+  }
 }
 
 .bg-dark--green {
