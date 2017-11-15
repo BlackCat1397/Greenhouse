@@ -132,15 +132,6 @@
 
             list.addEventListener('slip:beforewait', function(e){
                 var f = "ontouchstart" in document.documentElement;
-                if (f)
-                {
-                  alert("It's a touch screen device.");
-                }
-                else
-                {
-                  alert("Not touch"); 
-                }
-
                 if (!f) e.preventDefault();
             }, false);
 
