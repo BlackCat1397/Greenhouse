@@ -70,7 +70,7 @@
                 <td>92%</td>
                 <td>5.6</td>
                 <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-                <td><span class="oi oi-trash" title="trash" aria-hidden="true"></span></td>
+                <td><span class="oi oi-trash demo-no-reorder" title="trash" aria-hidden="true" id="del-icon"></span></td>
               </tr>
               <tr class="draggable demo-no-swipe">
                 <th scope="row">Period 2</th>
@@ -79,7 +79,7 @@
                 <td>86%</td>
                 <td>5.7</td>
                 <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-                <td><span class="oi oi-trash" title="trash" aria-hidden="true"></span></td>
+                <td><span class="oi oi-trash" title="trash" aria-hidden="true" id="del-icon"></span></td>
               </tr>
               <tr class="draggable demo-no-swipe">
                 <th scope="row">Period 3</th>
@@ -88,7 +88,7 @@
                 <td>80%</td>
                 <td>5.7</td>
                 <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-                <td><span class="oi oi-trash" title="trash" aria-hidden="true"></span></td>
+                <td><span class="oi oi-trash" title="trash" aria-hidden="true" id="del-icon"></span></td>
               </tr>
               <tr class="draggable demo-no-swipe">
                 <th scope="row">Period 4</th>
@@ -97,10 +97,10 @@
                 <td>95%</td>
                 <td>5.8</td>
                 <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-                <td><span class="oi oi-trash" title="trash" aria-hidden="true"></span></td>
+                <td><span class="oi oi-trash" title="trash" aria-hidden="true" id="del-icon"></span></td>
               </tr>
-              <tr>
-                <td colspan="7"><button type="button" class="btn btn-success" style="width: 100%">Add period</button></td>
+              <tr class="demo-no-reorder">
+                <td colspan="7" class="demo-no-reorder"><button type="button" class="demo-no-reorder btn btn-success" style="width: 100%">Add period</button></td>
               </tr>
             </tbody>
           </table>
@@ -114,6 +114,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../js/slip.js"></script>
     <script>
+        function deleteRow(e) {
+          t  = e.target.parentNode.parentNode.childNodes[0];
+          // alert(t);
+          // alert(t.textContent?t.textContent:t.innerText);
+
+          alert("You deleted period!");
+          e.target.parentNode.parentNode.style.display = 'none';
+        }
+
         function setupSlip(list) {
             var flag_dragging = false;
             list.addEventListener('mouseover', function(e){
@@ -128,6 +137,9 @@
 
             list.addEventListener('slip:beforereorder', function(e){
                 flag_dragging = true;
+                if(e.target.id == 'del-icon') {
+                    deleteRow(e);
+                }
                 if (e.target.classList.contains('demo-no-reorder')) {
                     e.preventDefault();
                 }
@@ -157,8 +169,9 @@
             }, false);
             return new Slip(list);
         }
-        setupSlip(document.getElementById('demo1'));
         
+        setupSlip(document.getElementById('demo1'));
+
     </script>
   </body>
 </html>

@@ -7,9 +7,9 @@ table.plan{
   border: solid 1px #eee;
   border-collapse: collapse;
 }
-@media only screen and (min-width : 680px) {
+@media only screen and (min-width : 670px) {
   table.plan {
-    display: inline-table;  
+    display: table;  
   }
 }
 
