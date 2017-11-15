@@ -130,21 +130,30 @@
                 }
             }, false);
 
+            list.addEventListener('slip:beforewait', function(e){
+                var f = "ontouchstart" in document.documentElement;
+                if (f)
+                {
+                  alert("It's a touch screen device.");
+                }
+                else
+                {
+                  alert("Not touch"); 
+                }
+
+                if (!f) e.preventDefault();
+            }, false);
+
             list.addEventListener('slip:beforeswipe', function(e){
-                flag_dragging = true;
-                if (e.target.nodeName == 'INPUT' || e.target.classList.contains('demo-no-swipe')) {
+                if (e.target.nodeName == 'INPUT' || e.target.parentNode.classList.contains('demo-no-swipe')) {
                     e.preventDefault();
                 }
             }, false);
 
-            list.addEventListener('slip:beforewait', function(e){
-                if (e.target.classList.contains('instant')) e.preventDefault();
-            }, false);
-
-            list.addEventListener('slip:afterswipe', function(e){
-                flag_dragging = false;
-                e.target.parentNode.appendChild(e.target);
-            }, false);
+            // list.addEventListener('slip:afterswipe', function(e){
+            //     flag_dragging = false;
+            //     e.target.parentNode.appendChild(e.target);
+            // }, false);
 
             list.addEventListener('slip:reorder', function(e){
                 flag_dragging = false;
