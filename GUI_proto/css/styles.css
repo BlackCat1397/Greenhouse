@@ -40,24 +40,23 @@ img.centered {
   cursor:    -moz-move; /* Firefox 1.5-26 */
   cursor:         move; /* W3C standards syntax, should come least */
 }
+
 .draggable:active { 
   cursor: -webkit-grabbing;
   cursor:    -moz-grabbing;
   cursor:         grabbing;
-}/*
-.draggable:target { 
-  cursor: -webkit-grabbing;
-  cursor:    -moz-grabbing;
-  cursor:         grabbing;
-}*/
-
-
+}
 
 .oi {
   cursor: pointer;
 }
 
-.slip-reordering {
-  /*background-color: blue;*/
-  /*cursor:         grabbing!important;*/
+@media only screen and (max-width : 979px) {
+  .img-plan {
+    width: 100%;
+  }
+}
+
+.img-plan {
+  height: 100% !important;
 }
