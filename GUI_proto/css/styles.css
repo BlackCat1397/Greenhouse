@@ -1,3 +1,10 @@
+.notifications-counter {
+  position: relative;
+  padding: 0.20rem .30rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
 a {
   color: #090;
 }
@@ -56,7 +63,15 @@ img.centered {
   cursor: pointer;
 }
 
-.oi-trash-period {
+.oi-plus.oi--plan {
+  margin-bottom: 5px;
+}
+
+.oi-plus:hover{
+  color: #28a745;
+}
+
+.oi--plan {
   font-size: 22px;
 }
 
