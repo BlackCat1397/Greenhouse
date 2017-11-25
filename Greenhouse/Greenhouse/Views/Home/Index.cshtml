@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Greenhouse-systems</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  </head>
+
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark--green">
+      <a class="navbar-brand" href="/">Greenhouse Systems(tm)</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/Home/Index">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="spectrate/status.html">Status</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              History
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="spectrate/plots.html">Plots</a>
+              <a class="dropdown-item" href="spectrate/log.html">Log</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Plans/Status">Plans</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="equipment/status.html">Equipment</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <div class="container">
+      <h1>@ViewData["name"]</h1>
+    </div>
+
+    <div class="container ">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">Notifications <span class="notifications-counter alert-danger" id="counter">2</span></a>
+        </li>
+      </ul>
+      <div class="tab-content" id="mainTabContent">
+        <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+          sdrghjlk
+        </div>
+        <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+          <table class="table table-striped ">
+            <tbody>
+              <tr><td class="alert alert-warning">00:21:41 - Deviation on passive temperature sensor 3.</td></tr>
+              <tr><td>00:21:44 - Conditioner 3 turned <span class="state state-off">off</span>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+
+    <script>
+      document.getElementById('notifications-tab').addEventListener('click', function(e) {
+      document.getElementById("counter").style.display = 'none';
+      });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+  </body>
+</html>
