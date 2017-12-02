@@ -35,5 +35,10 @@ namespace Greenhouse.System
     public Plan UpdatePlan(int id) {
       return plans.Find(x => x.ID == id);
     }
+
+    public bool DeletePlan(int id) {
+      Plan pl = plans.Find(x => x.ID == id);
+      return plans.Remove(pl);
+    }
   }
 }

@@ -43,5 +43,19 @@ namespace Greenhouse.Controllers
       Program.ghs.UpdatePlan(plan_id).DeletePeriod(period_id);
       return "OK";
     }
+
+    [HttpPost]
+    public string Rename([FromQuery]int id, [FromQuery]string new_name)
+    {
+      Program.ghs.UpdatePlan(id).Name = new_name;
+      return "OK";
+    }
+
+    [HttpDelete]
+    public string Delete(int id)
+    {
+      Program.ghs.DeletePlan(id);
+      return id.ToString();
+    }
   }
 }

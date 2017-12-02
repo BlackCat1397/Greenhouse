@@ -18,19 +18,19 @@
 }
 
 
-
 <h1>Plans <span class="oi oi-plus oi--plan" title="plus" aria-hidden="true" id="add-plan"></span></h1>
-
 
 
 @foreach (var plan in @Model) {
 <div class="plan" id="plan-@plan.ID" >
-  <h2><input type="text" class="plan-name" value="@plan.ID. @plan.Name">
-    <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true"></span>
-    <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" id="del-plan-@plan.ID" data-plan-id="@plan.ID"></span>
+  <h2>
+		<input type="text" class="plan-name" value="@plan.ID. @plan.Name" disabled>
+		<span style="display:none"></span>
+    <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true" data-plan-id="@plan.ID"></span>
+    <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" data-plan-id="@plan.ID"></span>
   </h2>
   <div class="row">
-    <div class="col-xl-9">
+    <div class="col-xl-8">
       <table class="table table-responsive table-striped plan">
         <thead>
           <tr>
@@ -66,24 +66,27 @@
 				<button type="button" class="btn btn-success add-per-btn" plan-id="@plan.ID" style="width: 100%">Add period</button>
       </div>
     </div>
-    <div class="col-xl-3"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
+    <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
   </div>
 </div>
 }
 
-<div class="plan">
-  <h2><input type="text" class="plan-name" value="Tulips - plan">
-    <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true"></span>
-    <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" id="del-plan-1"></span>
+
+<div class="plan" id="plan-sample" style="display: none">
+  <h2>
+    <input type="text" class="plan-name" value="" disabled>
+    <span style="display:none"></span>
+    <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true" data-plan-id=""></span>
+    <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" data-plan-id=""></span>
   </h2>
   <div class="row">
-    <div class="col-xl-9">
+    <div class="col-xl-8">
       <table class="table table-responsive table-striped plan">
         <thead>
           <tr>
             <th scope="col">Parameters</th>
-            <th scope="col">Duration (hours): </th>
-            <th scope="col">Air temperature: </th>
+            <th scope="col">Duration (hours):</th>
+            <th scope="col">Air temperature:</th>
             <th scope="col">Water temperature:</th>
             <th scope="col">PH:</th>
             <th scope="col">Humidity:</th>
@@ -92,111 +95,26 @@
             <th colspan="2"></th>
           </tr>
         </thead>
-        <tbody id="demo1">
-          <tr class="draggable demo-no-swipe">
-            <th scope="row">Period 1</th>
-            <td>120</td>
-            <td>22</td>
-			      <td>23</td>
-			      <td>5.6</td>
-            <td>92%</td>
-			      <td>80%</td>
-            <td>30</td>
-
-            <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-            <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-id="del-icon"></span></td>
-          </tr>
-          <tr class="draggable demo-no-swipe">
-            <th scope="row">Period 2</th>
-            <td>96</td>
-            <td>24</td>
-			      <td>22</td>
-            <td>5.7</td>
-			      <td>86%</td>
-            <td>60%</td>
-			      <td>30</td>
-			
-            <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-            <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-id="del-icon"></span></td>
-          </tr>
-          <tr class="draggable demo-no-swipe">
-            <th scope="row">Period 3</th>
-            <td>96</td>
-            <td>24</td>
-            <td>22</td>
-            <td>5.7</td>
-            <td>86%</td>
-            <td>60%</td>
-            <td>30</td>
-			
-            <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-            <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-id="del-icon"></span></td>
-          </tr>
-          <tr class="draggable demo-no-swipe">
-            <th scope="row">Period 4</th>
-            <td>96</td>
-            <td>24</td>
-            <td>22</td>
-            <td>5.7</td>
-            <td>86%</td>
-            <td>60%</td>
-            <td>30</td>
-			
-            <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-            <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-id="del-icon"></span></td>
-          </tr>
-          <tr class="demo-no-reorder">
-            <td colspan="10" class="demo-no-reorder"><button type="button" class="demo-no-reorder btn btn-success" style="width: 100%">Add period</button></td>
-          </tr>
+        <tbody id="">
+            <tr class="draggable demo-no-swipe">
+              <th scope="row">none</th>
+              <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-period-id="2"></span></td>
+              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-period-id="2"></span></td>
+            </tr>
         </tbody>
       </table>
+    
+      <div class="btn-add-period">
+        <button type="button" class="btn btn-success add-per-btn" plan-id="" style="width: 100%">Add period</button>
+      </div>
     </div>
-    <div class="col-xl-3"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
+    <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
   </div>
 </div>
-
-<div class="plan">
-  <h2>Bulba - plan <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" id="del-plan-2"></span></h2>
-  <div class="row">
-    <div class="col-lg-7">
-      <table class="table table-responsive table-striped plan">
-        <thead>
-          <tr>
-            <th scope="col">Parameters</th>
-            <th scope="col">Duration (hours): </th>
-            <th scope="col">Air temperature: </th>
-            <th scope="col">Humidity: </th>
-            <th scope="col">PH: </th>
-            <th colspan="2"></th>
-          </tr>
-        </thead>
-        <tbody id="plan2">
-          <tr class="draggable demo-no-swipe">
-            <th scope="row">Growing</th>
-            <td>120</td>
-            <td>10</td>
-            <td>88%</td>
-            <td>5.6</td>
-            <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-            <td><span class="oi oi-trash demo-no-reorder" title="trash" aria-hidden="true" data-id="del-icon"></span></td>
-          </tr>
-          <tr class="draggable demo-no-swipe">
-            <th scope="row">Flowering</th>
-            <td>96</td>
-            <td>25</td>
-            <td>86%</td>
-            <td>4</td>
-            <td><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></td>
-            <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-id="del-icon"></span></td>
-          </tr>
-
-          <tr class="demo-no-reorder">
-            <td colspan="7" class="demo-no-reorder"><button type="button" class="demo-no-reorder btn btn-success" style="width: 100%">Add period</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-lg-5"><img class="img-fluid img-plan" src="../spectrate/charts/chart1.png"></div>
-  </div>
-</div>
-

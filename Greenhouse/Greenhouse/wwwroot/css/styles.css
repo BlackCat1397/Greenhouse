@@ -1,3 +1,12 @@
+input.plan-name:disabled {
+  color: black;
+  -webkit-text-fill-color: #000;
+  border: transparent solid 2px;
+}
+input.plan-name:disabled:focus{
+  outline:none;
+}
+
 .btn-add-period {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.05);
@@ -16,6 +25,7 @@ a {
 }
 
 table.plan{
+  font-size: 0.8rem;
   flex: all;
   border: solid 1px #eee;
   border-collapse: collapse;

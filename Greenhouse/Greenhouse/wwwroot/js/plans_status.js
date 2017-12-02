@@ -58,71 +58,66 @@ function setupSlip(list) {
   return new Slip(list);
 }
 
-setupSlip(document.getElementById('demo1'));
-setupSlip(document.getElementById('plan2'));
-
-document.getElementById('del-plan-1').addEventListener('click', function(e){
-  if(confirm("OH SHHHH, U're going to delete Uour plan!!! Permanently!!! NaSoVsEm!!11!!!")) {
-    e.target.parentNode.parentNode.style.display ='none';
-  }
-});
-document.getElementById('del-plan-2').addEventListener('click', function(e){
-  if(confirm("OH SHHHH, U're going to delete Uour plan!!! Permanently!!! NaSoVsEm!!11!!!")) {
-    e.target.parentNode.parentNode.style.display ='none';
-  }
-});
+//setupSlip(document.getElementById('demo1'));
+//setupSlip(document.getElementById('plan2'));
 
 function addPlan(data) {
   var plan = jQuery.parseJSON( data );
 
-  var res = document.createElement("div");
-  res.classList.add('plan');
-  var innerHTML = '<h2><input type="text" class="plan-name" value="' + plan.ID + '. ' + plan.Name + '">' +
-  ' <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true"></span>' + 
-  ' <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" id="del-plan-' + plan.ID + '"></span>' +
-  '</h2>' +
-  '<div class="row">' +
-  '<div class="col-xl-9">' +
-      '<table class="table table-responsive table-striped plan">' +
-        '<thead>' +
-          '<tr>' +
-            '<th scope="col">Parameters</th>' +
-            '<th scope="col">Duration (hours):</th>';
+  var res = $('#plan-sample').clone();
+  res.insertAfter('h1');
+  res.attr('id', 'plan-' + plan.ID);
 
-            var params = plan.Periods[0].Params;
-            params = Object.keys( params );
-              
-            for (i = 0; i < params.length; i++) {
-              innerHTML += "<th scope='col'>" + params[i] + ":</th>";
-            }
+  var input = res.find('h2').find('input.plan-name');
+  input.val(plan.ID + '. ' + plan.Name);
+  var span = input.siblings('span').first();
+  span.text(plan.ID + '. ' + plan.Name);
 
-        innerHTML += '<th colspan="2"></th>' +
-        '</tr>' +
-        '</thead>' +
-        '<tbody id="demo1">' +
+  res.find('.oi--plan').data('plan-id', plan.ID);
+
+  var tbody = res.find('tbody');
+  tbody.attr('id', tbody);
+  var periods = plan.Periods;
+  if(periods.length == 0)
+  {
+    tbody.empty();
+  }
+  else 
+  {
+    for(i = 1; i < periods.length; i++) {
+      var p = res.find('tbody').find('tr').first().clone();
+      tbody.append(p);
+    }
+
+    for(i = 0; i < periods.length; i++) {
+      var cells = tbody.find('tr').eq(i).children();
+      per = periods[i];
+      cells.eq(0).text(per.Name);
+      cells.eq(1).text(per.Duration);
+
+      var params = Object.values(per.Params);
+      for(j = 2; j < 2 + params.length; j++) {
+        cells.eq(j).text(params[j-2]);
+      }
+    }
+  }
+
+  res.show();
+
+  var inputSize = span.width() + 6;
+  input.css("width", inputSize); // apply width of the span to the input
 
 
-        '</tbody>' +
-      '</table>' +
-      '<div class="btn-add-period">' +
-        '<button type="button" class="btn btn-success" style="width: 100%">Add period</button>' +
-      '</div>' +
-    '</div>' +
-    '<div class="col-xl-3"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>' +
-  '</div>' +
-'</div>';
-
-  res.innerHTML = innerHTML;
-  var container = document.getElementById('page-container');
-  container.insertBefore(res, container.children[1]);
+  input.keypress(resizeInput);
 
   return res;
 }
 
 document.getElementById('add-plan').addEventListener('click', function(e){
   $.post('/Plans/Create', function(data, textStatus, jqXHR){
-    alert('data' + data);
-    alert(addPlan(data));
+    //alert('data' + data);
+    addPlan(data);
+    //alert(addPlan(data));
   }).fail(function(){alert('Something goes wrong! Try again.')});
 });
 
@@ -152,6 +147,7 @@ function addPeriodToPage(data, plan_id) {
 } 
 
 var addPeriod = function() {
+  alert(this);
   var plan_id = this.getAttribute("plan-id");
 
   $.post('/Plans/AddPeriod?id=' + plan_id, function(data, textStatus, jqXHR){
@@ -159,7 +155,82 @@ var addPeriod = function() {
   }).fail(function(){alert('Something goes wrong! Try again.')});
 };
 
-var add_per_btn = document.getElementsByClassName("add-per-btn");
-for (var i = 0; i < add_per_btn.length; i++) {
-    add_per_btn[i].addEventListener('click', addPeriod, false);
+$("#page-container").on("click", ".add-per-btn", addPeriod);
+
+$('input[type="text"]').keypress(resizeInput);
+
+var e = jQuery.Event("keypress");
+e.which = ' '; // # Some key code value
+$('input').trigger(e);
+
+
+$("#page-container").on("click", ".oi-pencil.oi--plan", activateInput);
+
+function activateInput() {
+  var plan_id = $(this).data('plan-id');
+  var input = $(this).siblings('input');
+  var prev_name = input.val();
+  input.prop('disabled', false);
+  input.focus();
+  input.siblings('.oi').fadeOut(200);
+
+  input.on("keypress.enter", function(e) {
+    if(e.keyCode == 13) {
+      renamePlan(plan_id, $(this).val(), prev_name, $(this));
+    }
+  });
+
+  input.on("focusout", function() {
+    renamePlan(plan_id, $(this).val(), prev_name, $(this));
+  });
+}
+
+function renamePlan(plan_id, name, prev_name, input) {
+  deactivateInput(input);
+  $.post('/Plans/Rename?id=' + plan_id + '&new_name=' + name, function(data, textStatus, jqXHR){
+  }).fail(function(){
+    alert('Something goes wrong! Try again.');
+    $("#plan-" + plan_id).find('input.plan-name').val(prev_name);
+
+    $span = input.siblings('span').first();
+    $span.text(prev_name);
+    var $inputSize = $span.width() + 6; 
+    input.css("width", $inputSize);
+  });
+}
+
+function deactivateInput(input) {
+  input.off("keypress.enter");
+  input.off("focusout");
+  input.prop('disabled', true);
+  input.siblings('.oi').fadeIn(200);
+  input.focusout();
+}
+
+
+$("#page-container").on("click", ".oi-trash.oi--plan", deletePlan);
+
+function deletePlan() {
+  var id = $(this).data('plan-id');
+  if(confirm("Are you really want to delete this plan? " + id)) {
+    $.ajax({
+      url: '/Plans/Delete/' + id,
+      type: 'DELETE',
+      success: function(plan_id) {
+            $('#plan-'+plan_id).remove();
+        },
+      error: function(){alert('Something goes wrong! Try again.');}
+    });
+  }
+}
+
+function resizeInput(e) {
+  if (e.which !== 0 && e.charCode !== 0) { // only characters
+    var c = String.fromCharCode(e.keyCode|e.charCode);
+    $span = $(this).siblings('span').first();
+    $span.text($(this).val() + c) ; // the hidden span takes 
+                                    // the value of the input
+    var $inputSize = $span.width() + 6; 
+    $(this).css("width", $inputSize) ; // apply width of the span to the input
+  }
 }
