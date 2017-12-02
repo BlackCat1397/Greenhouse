@@ -24,5 +24,11 @@ Global
 		$1.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $2
 		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 80
+		$3.TabWidth = 2
+		$3.TabsToSpaces = True
+		$3.IndentWidth = 2
+		$3.scope = text/plain
 	EndGlobalSection
 EndGlobal

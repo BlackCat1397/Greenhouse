@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Greenhouse.Models.Plan;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,21 +14,34 @@ namespace Greenhouse.Controllers
     // GET: /<controller>/
     public IActionResult Status()
     {
-      IEnumerable<string> plans = Enumerable.Empty<string>();
-      plans.Append(Program.output);
-      plans.Append(Program.output);
+      List<Plan> plans = Program.ghs.Plans;
+      //  new List<Plan>(){
+      //  pl,
+      //  pl2
+      //};
 
-      string[] arr = new string[10];
-      arr[0] = Program.output;
-      arr[1] = Program.output;
+      return View(plans);
+    }
 
-      ViewData["plans"] = plans;
-      ViewData["arr"] = arr;
-      foreach (var plan in plans) {
-        
-      }
-      ViewData["plans"].ToString();
-      return View("status");
+    [HttpPost]
+    public string Create()
+    {
+      //IEnumerable<Plan> plans = Enumerable.Empty<Plan>();
+      Plan pl = Program.ghs.AddPlan();
+
+      return pl.ToJson();
+    }
+
+    [HttpPost]
+    public string AddPeriod(int id)
+    {
+      return Program.ghs.UpdatePlan(id).AddPeriod().ToJson();
+    }
+
+    [HttpPost]
+    public string DeletePeriod([FromQuery]int plan_id, [FromQuery]int period_id) {
+      Program.ghs.UpdatePlan(plan_id).DeletePeriod(period_id);
+      return "OK";
     }
   }
 }

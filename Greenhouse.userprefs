@@ -1,0 +1,19 @@
+﻿<Properties StartupConfiguration="{66C1A4B4-6F68-4C66-B13F-CEE4495964E7}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Greenhouse/Models/Plan/Plan.cs">
+    <Files>
+      <File FileName="Greenhouse/Controllers/PlansController.cs" Line="19" Column="15" />
+      <File FileName="Greenhouse/Views/Plans/status.cshtml" Line="27" Column="61" />
+      <File FileName="Greenhouse/wwwroot/js/plans_status.js" Line="5" Column="11" />
+      <File FileName="Greenhouse/Models/Plan/Plan.cs" Line="40" Column="18" />
+      <File FileName="Greenhouse/Program.cs" Line="22" Column="6" />
+      <File FileName="Greenhouse/System.cs" Line="7" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Greenhouse PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

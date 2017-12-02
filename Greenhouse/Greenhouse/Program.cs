@@ -10,17 +10,19 @@ using Microsoft.Extensions.Logging;
 
 using System.Diagnostics;
 
+using Greenhouse.Models.Plan;
+using Greenhouse.System;
 
 namespace Greenhouse
 {
   public class Program
   {
-    public static String output;
+    public static GreenhouseSystem ghs;
+
     public static void Main(string[] args)
     {
-      Plan plan = new Plan();
-      output = plan.Save();
-
+      ghs = new GreenhouseSystem();
+      ghs.Configure();
 
       BuildWebHost(args).Run();
     }

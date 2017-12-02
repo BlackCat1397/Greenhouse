@@ -30,22 +30,18 @@ namespace Greenhouse
       app.UseStaticFiles();
 
 
+
       app.UseMvc(routes =>
       {
         //routes.MapRoute("api", "api/get", );
 
         routes.MapRoute(
           name: "default",
-          template: "{controller=Home}/{action=Index}");
+          template: "{controller=Home}/{action=Index}/{id?}");
       });
 
 
-      app.Run(async (context) => 
-      {        
-        await context.Response.WriteAsync("<p>Error 404...</p>" +
-                                          "<p>No such page...</p>" +
-                                          "<a href=\"\\\">Try this!</a>");
-      });
+      app.UseStatusCodePages();
     }
   }
 }

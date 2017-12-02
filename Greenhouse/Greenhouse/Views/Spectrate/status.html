@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Status - Greenhouse-systems</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">    
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  </head>
+
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark--green">
+      <a class="navbar-brand" href="../index.html">Greenhouse Systems(tm)</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="spectrate/status.html">Status <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              History
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="plots.html">Plots</a>
+              <a class="dropdown-item" href="log.html">Log</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../plans/status.html">Plans</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../equipment/status.html">Equipment</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <h1>Status page</h1>
+    <div class="container-fluid">
+      <img class="col-lg-9 img-fluid centered" src="status.png">
+      <div class="col-lg-9 mx-auto">
+        <table class="table table-striped period">
+          <thead>
+            <tr>
+              <th scope="col">Parameters</th>
+              <th scope="col">Target value</th>
+              <th scope="col">Sensor 1</th>
+              <th scope="col">Sensor 2</th>
+              <th scope="col">Sensor 3</th>
+              <th scope="col">Sensor 4</th>
+              <th scope="col">Sensor 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Air temperature: </td>
+              <td>22</td>
+              <td class="alert alert-success">22</td>
+              <td class="alert alert-warning">23</td>
+              <td class="alert alert-success">22</td>
+              <td class="alert alert-danger">24</td>
+              <td class="alert alert-warning">21</td>
+            </tr>
+            <tr>
+              <td>Humidity: </td>
+              <td>92%</td>
+              <td class="alert alert-success">92%</td>
+              <td class="alert alert-success">92%</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <td>PH: </td>
+              <td>5.6</td>
+              <td class="alert alert-success">5.6</td>
+              <td class="alert alert-danger">5.2</td>
+              <td class="alert alert-success">5.6</td>
+              <td class="alert alert-warning">5.4</td>
+              <td>–</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  </body>
+</html>
