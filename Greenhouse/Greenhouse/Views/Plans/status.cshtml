@@ -46,7 +46,7 @@
             <th colspan="2"></th>
           </tr>
         </thead>
-        <tbody id="demo1">
+        <tbody id="tbody-@plan.ID">
 			    @foreach (var period in plan.Periods) {
 			      Dictionary<string, double> parameters = period.Params.ToDict();
             <tr class="draggable demo-no-swipe">
@@ -55,8 +55,8 @@
 				      @foreach (var p in parameters) {      
                 <td>@p.Value</td>
               }
-              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-period-id="@period.ID"></span></td>
-              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-period-id="@period.ID"></span></td>
+              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-plan-id="@plan.ID" data-period-id="@period.ID"></span></td>
+              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-plan-id="@plan.ID" data-period-id="@period.ID"></span></td>
             </tr>
 			    }
         </tbody>
@@ -105,8 +105,8 @@
                 <td>none</td>
                 <td>none</td>
                 <td>none</td>
-              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-period-id="2"></span></td>
-              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-period-id="2"></span></td>
+              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-plan-id="" data-period-id=""></span></td>
+              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-plan-id="" data-period-id=""></span></td>
             </tr>
         </tbody>
       </table>

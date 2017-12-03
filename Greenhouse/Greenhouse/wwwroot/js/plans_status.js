@@ -76,7 +76,7 @@ function addPlan(data) {
   res.find('.oi--plan').data('plan-id', plan.ID);
 
   var tbody = res.find('tbody');
-  tbody.attr('id', tbody);
+  tbody.attr('id', 'tbody-' + plan.ID);
   var periods = plan.Periods;
   if(periods.length == 0)
   {
@@ -91,7 +91,13 @@ function addPlan(data) {
 
     for(i = 0; i < periods.length; i++) {
       var cells = tbody.find('tr').eq(i).children();
-      per = periods[i];
+      var per = periods[i];
+
+      alert(cells.find('oi').data('plan-id'));
+      cells.find('.oi').data('plan-id', plan.ID);
+      cells.find('.oi').data('period-id', per.ID);
+
+
       cells.eq(0).text(per.Name);
       cells.eq(1).text(per.Duration);
 
@@ -115,9 +121,7 @@ function addPlan(data) {
 
 document.getElementById('add-plan').addEventListener('click', function(e){
   $.post('/Plans/Create', function(data, textStatus, jqXHR){
-    //alert('data' + data);
     addPlan(data);
-    //alert(addPlan(data));
   }).fail(function(){alert('Something goes wrong! Try again.')});
 });
 
@@ -228,9 +232,9 @@ function resizeInput(e) {
   if (e.which !== 0 && e.charCode !== 0) { // only characters
     var c = String.fromCharCode(e.keyCode|e.charCode);
     $span = $(this).siblings('span').first();
-    $span.text($(this).val() + c) ; // the hidden span takes 
+    $span.text($(this).val() + c); // the hidden span takes 
                                     // the value of the input
     var $inputSize = $span.width() + 6; 
-    $(this).css("width", $inputSize) ; // apply width of the span to the input
+    $(this).css("width", $inputSize); // apply width of the span to the input
   }
 }
