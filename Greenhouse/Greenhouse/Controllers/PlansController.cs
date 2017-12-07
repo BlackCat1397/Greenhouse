@@ -11,25 +11,34 @@ namespace Greenhouse.Controllers
 {
   public class PlansController : Controller
   {
+    [HttpPost]
+    public string Create()
+    {
+      Plan pl = Program.ghs.AddPlan();
+
+      return pl.ToJson();
+    }
+
     // GET: /<controller>/
     public IActionResult Status()
     {
       List<Plan> plans = Program.ghs.Plans;
-      //  new List<Plan>(){
-      //  pl,
-      //  pl2
-      //};
 
       return View(plans);
     }
 
     [HttpPost]
-    public string Create()
+    public string Rename([FromQuery]int id, [FromQuery]string new_name)
     {
-      //IEnumerable<Plan> plans = Enumerable.Empty<Plan>();
-      Plan pl = Program.ghs.AddPlan();
+      Program.ghs.UpdatePlan(id).Name = new_name;
+      return "OK";
+    }
 
-      return pl.ToJson();
+    [HttpDelete]
+    public string Delete(int id)
+    {
+      Program.ghs.DeletePlan(id);
+      return id.ToString();
     }
 
     [HttpPost]
@@ -45,17 +54,15 @@ namespace Greenhouse.Controllers
     }
 
     [HttpPost]
-    public string Rename([FromQuery]int id, [FromQuery]string new_name)
+    public string EditPeriod(string name, int days, int hours, double air_temp, int plan_id, int period_id,
+                             double water_temp, double ph, double humidity, double lighting, double fertilization)
     {
-      Program.ghs.UpdatePlan(id).Name = new_name;
-      return "OK";
-    }
+      Parameters parameters = new Parameters(air_temp, water_temp, ph, humidity, lighting, fertilization);
+      Period per = Program.ghs.UpdatePlan(plan_id).GetPeriod(period_id);
+      per.Params = parameters;
 
-    [HttpDelete]
-    public string Delete(int id)
-    {
-      Program.ghs.DeletePlan(id);
-      return id.ToString();
+
+      return per.ToJson();
     }
   }
 }

@@ -73,5 +73,10 @@ namespace Greenhouse.Models.Plan
     public DateTime GetBeginning() {
       return _Beginning;
     }
+
+    public Period GetPeriod(int id)
+    {
+      return _periods.Find(x => x.ID == id);
+    }
   }
 }

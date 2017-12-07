@@ -135,7 +135,6 @@ function renamePlan(plan_id, name, prev_name, input) {
 //PERIOD functions
 
 function addPeriod() {
-  alert(this);
   var plan_id = $(this).data("plan-id");
 
   $.post('/Plans/AddPeriod?id=' + plan_id, function(data, textStatus, jqXHR){
@@ -165,9 +164,26 @@ function addPeriodToPage(data, plan_id) {
   $(tr).find('.oi').data('period-id', data.ID);
   $(tr).find('.oi').data('plan-id', plan_id);
   document.getElementById('plan-' + plan_id).children[1].children[0].children[0].children[1].appendChild(tr);
-} 
+}
 
+function replacePeriod(data, period_id) {
+  data = $.parseJSON(data);
+  var params = data.Params;
+  params = Object.values( params );
 
+}  
+
+function editPeriod(e) {
+  var tr = e.target.parentNode.parentNode;
+  var name = tr.children[0];  name = (name.textContent?name.textContent:name.innerText);
+  var period_id = $(e.target).data('period-id');
+  var plan_id = $(e.target).data('plan-id');
+
+  $('#periodModalLabel').text('Edit ' + name + ' period');
+  $('#periodModal').data('period-id', period_id);
+  $('#periodModal').data('plan-id', plan_id);
+  $('#periodModal').modal();
+}
 
 function deletePeriod(e) {
   var tr = e.target.parentNode.parentNode;
@@ -179,7 +195,6 @@ function deletePeriod(e) {
     var period_id = $(e.target).data('period-id');
     var plan_id = $(e.target).data('plan-id');
     $.post('/Plans/DeletePeriod?plan_id=' + plan_id + '&period_id=' + period_id, function(data, textStatus, jqXHR){
-      alert(data);
       tr.parentNode.removeChild(tr);
     }).fail(function(){alert('Something goes wrong! Try again.')});
   }
@@ -222,6 +237,7 @@ function setupSlip(list) {
 
   list.addEventListener('slip:beforereorder', function(e){
       flag_dragging = true;
+      console.log('a');
       if (e.target.classList.contains('demo-no-reorder')) {
           flag_dragging = false;
           e.preventDefault();
@@ -229,12 +245,15 @@ function setupSlip(list) {
   }, false);
 
   list.addEventListener('slip:beforewait', function(e){
-      var f = "ontouchstart" in document.documentElement;
       if(e.target.getAttribute('data-action') == 'del-period') {
           deletePeriod(e);
       }
-      else
-        if(e.target.getAttribute('data-action') == 'edit-period')
+      else {
+        if(e.target.getAttribute('data-action') == 'edit-period') {
+          editPeriod(e);
+        }
+      }
+      var f = "ontouchstart" in document.documentElement;
       if (!f) e.preventDefault();
   }, false);
 
@@ -251,3 +270,17 @@ function setupSlip(list) {
   }, false);
   return new Slip(list);
 }
+
+$('#edit-period-form').on('submit', function(e) {
+  e.preventDefault();
+
+  var form_data = $('#edit-period-form').serialize();
+  var period_id = $('#periodModal').data('period-id');
+  form_data += "&period_id=" + period_id;
+  form_data += "&plan_id=" + $('#periodModal').data('plan-id');
+  console.log(form_data);
+  $.post('/Plans/EditPeriod', form_data).done(function(data){
+    alert(data);
+    replacePeriod(data, period_id);
+  });
+});

@@ -14,13 +14,23 @@ namespace Greenhouse.Models.Plan
     private double _fertilization;
 
 
-    public Parameters() {
+    public Parameters()
+    {
       _airTemperature = 22;
       _waterTemperature = 23;
       _ph = 5.6;
       _humidity = 92;
       _lightening = 80;
       _fertilization = 90;
+    }
+
+    public Parameters(double AirTemperature, double WaterTemperature, double PH, double Humidity, double Lightening, double Fertilization) {
+      this.AirTemperature = AirTemperature;
+      this.WaterTemperature = WaterTemperature;
+      this.PH = PH;
+      this.Humidity = Humidity;
+      this.Lighting = Lightening;
+      this.Fertilization = Fertilization;
     }
 
     public Dictionary<string, double> ToDict()

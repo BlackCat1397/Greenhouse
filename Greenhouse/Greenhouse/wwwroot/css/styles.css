@@ -1,3 +1,8 @@
+input[type=number] {
+  width: 80px;
+}
+
+
 input.plan-name:disabled {
   color: black;
   -webkit-text-fill-color: #000;

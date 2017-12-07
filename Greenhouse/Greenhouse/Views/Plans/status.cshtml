@@ -118,3 +118,92 @@
     <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
   </div>
 </div>
+
+
+
+<div class="modal fade" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-period-id="" data-plan-id="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="periodModalLabel">Edit </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/Plans/EditPeriod" method="post" id="edit-period-form">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>  
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="nameInput">Name:</label>
+                <input id="nameInput" name="name" type="text" class="form-control form-inline" placeholder="new name" step="0.01" min="0" max="10">
+              </div>
+            </div>
+          </div>
+					<div class="row">
+						<div class="col-sm-3">
+            </div>
+  					<div class="col-sm-3">
+              <div class="form-group">
+    						<label for="daysInput">Days:</label>
+    						<input id="daysInput" name="days" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+    					</div>
+  					</div>
+  					<div class="col-sm-3">
+    					<div class="form-group">
+    						<label for="hoursInput">Hours:</label>
+                <input id="hoursInput" name="hours" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">      
+    					</div>
+  					</div>
+						<div class="col-sm-3">
+            </div>
+					</div>
+					<div class="row">
+            <div class="col-sm-3">
+							<label for="airTempInput">Air temp:</label>
+              <input id="airTempInput" name="air_temp" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="waterTempInput">Water temp:</label>
+                <input id="waterTempInput" name="water_temp" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="phInput">PH:</label>
+                <input id="phInput" name="ph" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">      
+              </div>
+            </div>
+            <div class="col-sm-3">
+							<label for="humidityInput">Humidity:</label>
+              <input id="humidity" name="humidity" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+            </div>
+          </div>
+					<div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="lightingInput">Lighting:</label>
+                <input id="lightingInput" name="lighting" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="fertInput">Fertiliztion:</label>
+                <input id="fertInput" name="fertilization" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">      
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="edit-period-form" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
