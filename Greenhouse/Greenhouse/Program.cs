@@ -31,6 +31,7 @@ namespace Greenhouse
         WebHost.CreateDefaultBuilder(args)
                .UseContentRoot(Directory.GetCurrentDirectory())
                .UseStartup<Startup>()
+               .UseUrls("http://*:5000")
                .Build();
   }
 }

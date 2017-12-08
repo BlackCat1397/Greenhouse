@@ -42,8 +42,6 @@ namespace Greenhouse.Models.Plan
 
     public string ToJson() {
       return JsonConvert.SerializeObject(this);
-      //var settings = new JsonSerializerSettings() { ContractResolver = new AllFieldsContractResolver() };
-      //return JsonConvert.SerializeObject(this, settings);
     }
 
     public string Save() 

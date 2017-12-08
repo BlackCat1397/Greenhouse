@@ -60,9 +60,19 @@ namespace Greenhouse.Controllers
       Parameters parameters = new Parameters(air_temp, water_temp, ph, humidity, lighting, fertilization);
       Period per = Program.ghs.UpdatePlan(plan_id).GetPeriod(period_id);
       per.Params = parameters;
-
+      per.Name = name;
+      per.Duration = new TimeSpan(days, hours, 0, 0).TotalHours;
 
       return per.ToJson();
+    }
+
+    [HttpPost]
+    public string MovePeriod(int plan_id, int period_id, int index, int prev_index) {
+      Period per = Program.ghs.UpdatePlan(plan_id).Periods.Find(x => x.ID == period_id);
+      Program.ghs.UpdatePlan(plan_id).Periods.RemoveAt(prev_index);
+      Program.ghs.UpdatePlan(plan_id).Periods.Insert(index, per);
+
+      return "OK";
     }
   }
 }

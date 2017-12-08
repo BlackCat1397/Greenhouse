@@ -16,6 +16,9 @@
     <Folder Include="Models\Plan\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\img\Charts\" />
+    <Folder Include="Views\Equipment\" />
+    <Folder Include="wwwroot\js\equipment\" />
+    <Folder Include="wwwroot\css\equipment\" />
   </ItemGroup>
 
   <ItemGroup>

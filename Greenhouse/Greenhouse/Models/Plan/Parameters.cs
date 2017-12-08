@@ -49,38 +49,38 @@ namespace Greenhouse.Models.Plan
     [JsonProperty(PropertyName = "Air temperature")]
     public double AirTemperature {
       get => _airTemperature;
-      set => _airTemperature = value;
+      set => _airTemperature = value==0?_airTemperature:value;
     }
 
     [JsonProperty(PropertyName = "Water temperature")]
     public double WaterTemperature
     {
       get => _waterTemperature;
-      set => _waterTemperature = value;
+      set => _waterTemperature = value==0?_waterTemperature:value;
     }
 
     public double PH
     {
       get => _ph;
-      set => _ph = value;
+      set => _ph = value==0?_ph:value;
     }
 
     public double Humidity
     {
       get => _humidity;
-      set => _humidity = value;
+      set => _humidity = value==0?_humidity:value;
     }
 
     public double Lighting
     {
       get => _lightening;
-      set => _lightening = value;
+      set => _lightening = value==0?_lightening:value;
     }
 
     public double Fertilization
     {
       get => _fertilization;
-      set => _fertilization = value;
+      set => _fertilization = value==0?_fertilization:value;
     }
   }
 }

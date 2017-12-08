@@ -74,7 +74,8 @@ function addPlan(data) {
       var cells = tbody.find('tr').eq(i).children();
       var per = periods[i];
 
-      cells.find('.oi').data('plan-id', plan.ID);
+      cells.find('.oi-pencil').data('plan-id', plan.ID);
+      cells.find('.oi-trash').data('plan-id', plan.ID);
       cells.find('.oi').data('period-id', per.ID);
 
 
@@ -166,11 +167,18 @@ function addPeriodToPage(data, plan_id) {
   document.getElementById('plan-' + plan_id).children[1].children[0].children[0].children[1].appendChild(tr);
 }
 
-function replacePeriod(data, period_id) {
-  data = $.parseJSON(data);
-  var params = data.Params;
-  params = Object.values( params );
 
+function replacePeriod(data, period_id) {
+  per = $.parseJSON(data);
+
+  var cells = $("span").filter("[data-period-id='" + period_id + "']").first().parent().parent().children();
+  cells.eq(0).text(per.Name);
+  cells.eq(1).text(per.Duration);
+
+  var params = Object.values(per.Params);
+  for(j = 2; j < 2 + params.length; j++) {
+    cells.eq(j).text(params[j-2]);
+  }
 }  
 
 function editPeriod(e) {
@@ -238,7 +246,7 @@ function setupSlip(list) {
   list.addEventListener('slip:beforereorder', function(e){
       flag_dragging = true;
       console.log('a');
-      if (e.target.classList.contains('demo-no-reorder')) {
+      if (e.target.classList.contains('demo-no-reorder') || e.target.classList.contains("oi")) {
           flag_dragging = false;
           e.preventDefault();
       }
@@ -264,8 +272,15 @@ function setupSlip(list) {
   }, false);
 
   list.addEventListener('slip:reorder', function(e){
-      flag_dragging = false;
+      var plan_id = $(e.target).find(".oi-pencil").data('plan-id');
+      var period_id = $(e.target).find(".oi-pencil").data('period-id');
+      $.post('/Plans/MovePeriod', "plan_id=" + plan_id + "&period_id=" + period_id 
+                  + "&index=" + e.detail.spliceIndex + "&prev_index=" + e.detail.originalIndex)
+                      .fail(function(){
+                        alert('FATAL ERRORS OCCURED! RELOAD PAGE IMMEDIATTELY!')
+                      });
       e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
+      flag_dragging = false;
       return false;
   }, false);
   return new Slip(list);
@@ -278,9 +293,9 @@ $('#edit-period-form').on('submit', function(e) {
   var period_id = $('#periodModal').data('period-id');
   form_data += "&period_id=" + period_id;
   form_data += "&plan_id=" + $('#periodModal').data('plan-id');
-  console.log(form_data);
+
   $.post('/Plans/EditPeriod', form_data).done(function(data){
-    alert(data);
     replacePeriod(data, period_id);
-  });
+    $('#periodModal').modal('hide');
+  }).fail(function() {alert('Something goes wrong! Try again.')});
 });

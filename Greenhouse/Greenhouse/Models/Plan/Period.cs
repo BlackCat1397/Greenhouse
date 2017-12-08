@@ -7,7 +7,7 @@ namespace Greenhouse.Models.Plan
   {
     private static int id = 0;
 
-    public String Name;
+    private String _name;
     private int _id;
     private DateTime beginning;
     private DateTime end;
@@ -34,7 +34,12 @@ namespace Greenhouse.Models.Plan
     public string ToJson()
     {
       return JsonConvert.SerializeObject(this);
-     }
+    }
+
+    public string Name {
+      get => _name;
+      set => _name = value==null ? _name : value;
+    }
 
     public Parameters Params{
       get => _params;
@@ -53,6 +58,7 @@ namespace Greenhouse.Models.Plan
     [JsonProperty(PropertyName = "Duration")]
     public double Duration {
       get => (end - beginning).TotalHours;
+      set { end = beginning + new TimeSpan((int)value, 0, 0); }
     }
   }
 }
