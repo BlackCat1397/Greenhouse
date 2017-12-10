@@ -1,0 +1,50 @@
+﻿#page-container {
+  margin-top: 10px;
+}
+
+.equipment-table {
+  border: solid 2px black;
+  border-collapse: collapse;
+  display: table;
+}
+
+.equipment-table td {
+  border: solid 1px green;
+  width: 10%;
+  padding-top: 10%;
+  padding-bottom: 0px;
+}
+
+span.oi {
+  width: 26px;
+  height: 26px;
+  border: solid 3px;  padding: 3px;
+}
+
+#add-sensor-humidity {
+  border-color: #add8e6;
+}
+
+#add-sensor-fert {
+  border-color: brown;
+}
+
+#add-sensor-light {
+  border-color: #fff04e;
+}
+
+#add-sensor-air {
+  border-color: #ddf;
+}
+
+#add-sensor-water {
+  border-color: blue;
+}
+
+#add-sensor-ph {
+  border-color: green;
+}
+
+.oi:empty:before {
+  margin-left: -1px;
+}

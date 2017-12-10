@@ -1,0 +1,51 @@
+﻿@page
+@{
+  ViewBag.Title = "Equipment - Greenhouse-systems";
+  ViewBag.MenuItem = "Equipment";
+  Layout = "_Layout";
+
+  @section Styles {
+    <link rel="stylesheet" href="/css/equipment/equipment.css">
+  }
+
+  @section Scripts {
+    <script type="text/javascript" src="/js/equipment/equipment.js"></script>
+  }
+}
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="card col-6">
+        <div class="card-body">
+          <h4 class="card-title">Passive sensors</h4>
+          <p><span class="oi oi-dashboard" id="add-sensor-air"></span> Air temperature x4</p>
+          <p><span class="oi oi-dashboard" id="add-sensor-water"></span> Water temperature x4</p>
+          <p><span class="oi oi-dashboard" id="add-sensor-ph"></span> PH x2</p>
+        </div>
+      </div>
+      <div class="card col-6">
+        <div class="card-body">
+          <h4 class="card-title">Active sensors</h4>
+          <p><span class="oi oi-dashboard" id="add-sensor-humidity"></span> Humidity x4</p>
+          <p><span class="oi oi-dashboard" id="add-sensor-fert"></span> Fertilization x4</p>
+          <p><span class="oi oi-dashboard" id="add-sensor-light"></span> Lightening x2</p>
+        </div>
+      </div>
+      <div class="card col-6">
+        <div class="card-body">
+          <h4 class="card-title">Equipment</h4>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+      <div class="card col-6">
+        <div class="card-body">
+          <h4 class="card-title">OK</h4>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
