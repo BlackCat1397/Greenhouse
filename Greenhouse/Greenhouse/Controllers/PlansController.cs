@@ -30,7 +30,7 @@ namespace Greenhouse.Controllers
     [HttpPost]
     public string Rename([FromQuery]int id, [FromQuery]string new_name)
     {
-      Program.ghs.UpdatePlan(id).Name = new_name;
+      Program.ghs.GetPlan(id).Name = new_name;
       return "OK";
     }
 
@@ -44,12 +44,12 @@ namespace Greenhouse.Controllers
     [HttpPost]
     public string AddPeriod(int id)
     {
-      return Program.ghs.UpdatePlan(id).AddPeriod().ToJson();
+      return Program.ghs.GetPlan(id).AddPeriod().ToJson();
     }
 
     [HttpPost]
     public string DeletePeriod([FromQuery]int plan_id, [FromQuery]int period_id) {
-      Program.ghs.UpdatePlan(plan_id).DeletePeriod(period_id);
+      Program.ghs.GetPlan(plan_id).DeletePeriod(period_id);
       return "OK";
     }
 
@@ -58,7 +58,7 @@ namespace Greenhouse.Controllers
                              double water_temp, double ph, double humidity, double lighting, double fertilization)
     {
       Parameters parameters = new Parameters(air_temp, water_temp, ph, humidity, lighting, fertilization);
-      Period per = Program.ghs.UpdatePlan(plan_id).GetPeriod(period_id);
+      Period per = Program.ghs.GetPlan(plan_id).GetPeriod(period_id);
       per.Params = parameters;
       per.Name = name;
       per.Duration = new TimeSpan(days, hours, 0, 0).TotalHours;
@@ -68,9 +68,9 @@ namespace Greenhouse.Controllers
 
     [HttpPost]
     public string MovePeriod(int plan_id, int period_id, int index, int prev_index) {
-      Period per = Program.ghs.UpdatePlan(plan_id).Periods.Find(x => x.ID == period_id);
-      Program.ghs.UpdatePlan(plan_id).Periods.RemoveAt(prev_index);
-      Program.ghs.UpdatePlan(plan_id).Periods.Insert(index, per);
+      Period per = Program.ghs.GetPlan(plan_id).Periods.Find(x => x.ID == period_id);
+      Program.ghs.GetPlan(plan_id).Periods.RemoveAt(prev_index);
+      Program.ghs.GetPlan(plan_id).Periods.Insert(index, per);
 
       return "OK";
     }

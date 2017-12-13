@@ -19,6 +19,9 @@
     <Folder Include="Views\Equipment\" />
     <Folder Include="wwwroot\js\equipment\" />
     <Folder Include="wwwroot\css\equipment\" />
+    <Folder Include="Models\Device\" />
+    <Folder Include="Models\Sensor\" />
+    <Folder Include="Models\Field\" />
   </ItemGroup>
 
   <ItemGroup>

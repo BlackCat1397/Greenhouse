@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Greenhouse.Models.Plan;
+using Greenhouse.Models.Equipment;
+using Greenhouse.Models.Field;
 
 namespace Greenhouse.System
 {
   public class GreenhouseSystem
   {
     private Period _currentPeriod;
+    public Field field;
     private List<Plan> plans;
 
     public GreenhouseSystem() {
       _currentPeriod = null;
       plans = new List<Plan>();
+      field = new Field();
     }
 
     public bool Configure() {
@@ -32,7 +36,7 @@ namespace Greenhouse.System
       get => plans;
     }
 
-    public Plan UpdatePlan(int id) {
+    public Plan GetPlan(int id) {
       return plans.Find(x => x.ID == id);
     }
 
