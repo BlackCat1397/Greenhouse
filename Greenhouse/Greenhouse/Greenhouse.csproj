@@ -22,6 +22,9 @@
     <Folder Include="Models\Device\" />
     <Folder Include="Models\Sensor\" />
     <Folder Include="Models\Field\" />
+    <Folder Include="Views\Status\" />
+    <Folder Include="wwwroot\js\status\" />
+    <Folder Include="wwwroot\css\status\" />
   </ItemGroup>
 
   <ItemGroup>

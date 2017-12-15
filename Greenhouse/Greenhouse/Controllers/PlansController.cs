@@ -57,11 +57,19 @@ namespace Greenhouse.Controllers
     public string EditPeriod(string name, int days, int hours, double air_temp, int plan_id, int period_id,
                              double water_temp, double ph, double humidity, double lighting, double fertilization)
     {
-      Parameters parameters = new Parameters(air_temp, water_temp, ph, humidity, lighting, fertilization);
+      
       Period per = Program.ghs.GetPlan(plan_id).GetPeriod(period_id);
+
+      Parameters parameters = new Parameters(per.Params);
+      parameters.SetParameters(air_temp, water_temp, ph, humidity, lighting, fertilization);
       per.Params = parameters;
       per.Name = name;
-      per.Duration = new TimeSpan(days, hours, 0, 0).TotalHours;
+
+
+      double NewDuration = new TimeSpan(days, hours, 0, 0).TotalHours;
+
+      if (NewDuration != 0)
+        per.Duration = NewDuration;
 
       return per.ToJson();
     }

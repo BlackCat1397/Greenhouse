@@ -27,10 +27,15 @@ $('#page-container').children().first().prepend(div);
 
 function placeSensor(type) {
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки
+    $('td').off('click');
     var x = $(this).index();          //($this) – ячейка, на которую кликнули, .index() – её номер
     var y = $(this).parent().index()  //.parent() – то, в чем она лежит
 
     $.post("/Equipment/PlaceSensor", 'x='+ x + '&y=' + y + '&type=' + type, function(sensor){  //$.post – послать на сервер
+      if(sensor == "fail") {
+        alert('Something goes wrong! Try again.');
+        return false;
+      }
       sensor = $.parseJSON(sensor);
       drawSensor(sensor.type, sensor.x, sensor.y);
       var q =  $('#' + sensor.type + '-unplaced').text();
@@ -97,13 +102,17 @@ function getSensors() {
 
 function placeDevice(type) {
   alert("Add " + type);
+  $('td').off('click');
 
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки
     var x = $(this).index();          //($this) – ячейка, на которую кликнули, .index() – её номер
     var y = $(this).parent().index()  //.parent() – то, в чем она лежит
 
     $.post("/Equipment/PlaceDevice", 'x='+ x + '&y=' + y + '&type=' + type, function(device){  //$.post – послать на сервер
-      alert(device);
+      if(device == "fail") {
+        alert('Something goes wrong! Try again.');
+        return false;
+      }
       device = $.parseJSON(device);
 
       drawDevice(type, x, y);
@@ -118,7 +127,6 @@ function placeDevice(type) {
 function drawDevice(type, x, y) {
   var icon = [["lighter", "sun"], ["conditioner", "cloud"], ["heater", "fire"], ["fertilizer", "beaker"], ["humidifier", "droplet"]];
   icon = new Map(icon);
-  alert(type);
   var cell = $('tr').eq(y).children().eq(x);
   cell.html('<span class="oi oi-' + icon.get(type) +  '"></span>');
   cell.css("padding-top", "0");
@@ -185,4 +193,5 @@ $('#add-humidifier').on('click', function(e) {
 
 
 $('tbody').on('click', '.sensor', deleteSensor);
+$('tbody').on('click', 'span.oi', deleteSensor);
 

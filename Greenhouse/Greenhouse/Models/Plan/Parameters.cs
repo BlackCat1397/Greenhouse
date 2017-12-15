@@ -24,7 +24,27 @@ namespace Greenhouse.Models.Plan
       _fertilization = 90;
     }
 
+    public Parameters(Parameters ToCopy)
+    {
+      this._airTemperature = ToCopy.AirTemperature;
+      this._waterTemperature = ToCopy.WaterTemperature;
+      this._ph = ToCopy.PH;
+      this._humidity = ToCopy.Humidity;
+      this._lightening = ToCopy.Lighting;
+      this._fertilization = ToCopy.Fertilization;
+    }
+
     public Parameters(double AirTemperature, double WaterTemperature, double PH, double Humidity, double Lightening, double Fertilization) {
+      this.AirTemperature = AirTemperature;
+      this.WaterTemperature = WaterTemperature;
+      this.PH = PH;
+      this.Humidity = Humidity;
+      this.Lighting = Lightening;
+      this.Fertilization = Fertilization;
+    }
+
+    public void SetParameters(double AirTemperature, double WaterTemperature, double PH, double Humidity, double Lightening, double Fertilization)
+    {
       this.AirTemperature = AirTemperature;
       this.WaterTemperature = WaterTemperature;
       this.PH = PH;

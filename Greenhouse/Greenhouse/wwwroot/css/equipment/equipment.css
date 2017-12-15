@@ -1,4 +1,24 @@
-﻿#page-container {
+﻿.equipment-table td {
+  position: relative;
+}
+
+.equipment-table td .oi {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7vw;
+}
+
+@media (min-width: 768px) {
+  .equipment-table td .oi {
+    font-size: 3.5vw;
+  }
+}
+
+
+
+#page-container {
   margin-top: 10px;
 }
 
@@ -42,9 +62,33 @@ span.oi-dashboard {
 }
 
 #add-sensor-ph {
-  border-color: green;
+  border-color: green;
 }
 
 .oi:empty:before {
   margin-left: -1px;
+}
+
+.oi-sun {
+  color: #fff04e;
+}
+
+.oi-cloud {
+  color: #ddf;
+}
+
+.oi-fire {
+  color: red;
+}
+
+.oi-beaker {
+  color: brown;
+}
+
+.oi-droplet {
+  color: #add8e6;
+}
+
+.sensor .oi {
+  color: #FFF;
 }
