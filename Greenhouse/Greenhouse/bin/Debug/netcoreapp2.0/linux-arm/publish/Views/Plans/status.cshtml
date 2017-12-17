@@ -1,0 +1,209 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@*model IEnumerable<Greenhouse.Models.Plan>*@
+@using Greenhouse.Models.Plan;
+@using System.Collections.Generic;
+@model List<Plan>
+
+@{
+  ViewBag.Title = "Plans - Greenhouse-systems";
+  ViewBag.MenuItem = "Plans";
+  Layout = "_Layout";
+
+  @section Scripts {
+    <script type="text/javascript" src="/js/slip.js"></script>
+    <script type="text/javascript" src="/js/plans_status.js"></script>
+  };
+}
+
+
+<h1>Plans <span class="oi oi-plus oi--plan" title="plus" aria-hidden="true" id="add-plan"></span></h1>
+
+
+@foreach (var plan in @Model) {
+<div class="plan" id="plan-@plan.ID" >
+  <h2>
+		<input type="text" class="plan-name" value="@plan.ID. @plan.Name" disabled>
+		<span style="display:none"></span>
+    <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true" data-plan-id="@plan.ID"></span>
+    <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" data-plan-id="@plan.ID"></span>
+  </h2>
+  <div class="row">
+    <div class="col-xl-8">
+      <table class="table table-responsive table-striped plan">
+        <thead>
+          <tr>
+            <th scope="col">Parameters</th>
+				    <th scope="col">Duration (hours):</th>
+
+
+						@foreach (var param in plan.Periods.First().Params.ToDict()){
+			        <th scope="col">@param.Key:</th>
+			      }
+
+						
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-@plan.ID">
+			    @foreach (var period in plan.Periods) {
+			      Dictionary<string, double> parameters = period.Params.ToDict();
+            <tr class="draggable demo-no-swipe">
+              <th scope="row">@period.Name</th>
+				      <td>@period.Duration</td>
+				      @foreach (var p in parameters) {      
+                <td>@p.Value</td>
+              }
+              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-plan-id="@plan.ID" data-period-id="@period.ID"></span></td>
+              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-plan-id="@plan.ID" data-period-id="@period.ID"></span></td>
+            </tr>
+			    }
+        </tbody>
+      </table>
+		
+	    <div class="btn-add-period">
+				<button type="button" class="btn btn-success add-per-btn" data-plan-id="@plan.ID" style="width: 100%">Add period</button>
+      </div>
+    </div>
+    <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
+  </div>
+</div>
+}
+
+
+<div class="plan" id="plan-sample" style="display: none">
+  <h2>
+    <input type="text" class="plan-name" value="" disabled>
+    <span style="display:none"></span>
+    <span class="oi oi-pencil oi--plan" title="pencil" aria-hidden="true" data-plan-id=""></span>
+    <span class="oi oi-trash oi--plan" title="trash" aria-hidden="true" data-plan-id=""></span>
+  </h2>
+  <div class="row">
+    <div class="col-xl-8">
+      <table class="table table-responsive table-striped plan">
+        <thead>
+          <tr>
+            <th scope="col">Parameters</th>
+            <th scope="col">Duration (hours):</th>
+            <th scope="col">Air temperature:</th>
+            <th scope="col">Water temperature:</th>
+            <th scope="col">PH:</th>
+            <th scope="col">Humidity:</th>
+            <th scope="col">Lighting:</th>
+            <th scope="col">Fertilizer:</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody id="">
+            <tr class="draggable demo-no-swipe">
+              <th scope="row">none</th>
+              <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+                <td>none</td>
+              <td><span class="oi oi-pencil" title="pencil" aria-hidden="true" data-action="edit-period" data-plan-id="" data-period-id=""></span></td>
+              <td><span class="oi oi-trash" title="trash" aria-hidden="true" data-action="del-period" data-plan-id="" data-period-id=""></span></td>
+            </tr>
+        </tbody>
+      </table>
+    
+      <div class="btn-add-period">
+        <button type="button" class="btn btn-success add-per-btn" data-plan-id="" style="width: 100%">Add period</button>
+      </div>
+    </div>
+    <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-period-id="" data-plan-id="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="periodModalLabel">Edit </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/Plans/EditPeriod" method="post" id="edit-period-form">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>  
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="nameInput">Name:</label>
+                <input id="nameInput" name="name" type="text" class="form-control form-inline" placeholder="new name" step="0.01" min="0" max="10">
+              </div>
+            </div>
+          </div>
+					<div class="row">
+						<div class="col-sm-3">
+            </div>
+  					<div class="col-sm-3">
+              <div class="form-group">
+    						<label for="daysInput">Days:</label>
+    						<input id="daysInput" name="days" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+    					</div>
+  					</div>
+  					<div class="col-sm-3">
+    					<div class="form-group">
+    						<label for="hoursInput">Hours:</label>
+                <input id="hoursInput" name="hours" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">      
+    					</div>
+  					</div>
+						<div class="col-sm-3">
+            </div>
+					</div>
+					<div class="row">
+            <div class="col-sm-3">
+							<label for="airTempInput">Air temp:</label>
+              <input id="airTempInput" name="air_temp" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="waterTempInput">Water temp:</label>
+                <input id="waterTempInput" name="water_temp" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="phInput">PH:</label>
+                <input id="phInput" name="ph" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">      
+              </div>
+            </div>
+            <div class="col-sm-3">
+							<label for="humidityInput">Humidity:</label>
+              <input id="humidity" name="humidity" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+            </div>
+          </div>
+					<div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="lightingInput">Lighting:</label>
+                <input id="lightingInput" name="lighting" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="fertInput">Fertiliztion:</label>
+                <input id="fertInput" name="fertilization" type="number" class="form-control form-inline" placeholder="1.0" step="0.01" min="0" max="10">      
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="edit-period-form" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

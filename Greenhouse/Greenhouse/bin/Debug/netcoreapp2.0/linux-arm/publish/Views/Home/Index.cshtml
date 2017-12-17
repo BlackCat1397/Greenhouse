@@ -1,0 +1,36 @@
+﻿@{
+  Layout = "_Layout";
+
+  @section Scripts {
+    <script>
+      document.getElementById('notifications-tab').addEventListener('click', function(e) {
+      document.getElementById("counter").style.display = 'none';
+      });
+    </script>
+  };
+}
+
+    
+<h1>Welcome to GHS(tm)</h1>
+    
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">Notifications <span class="notifications-counter alert-danger" id="counter">2</span></a>
+  </li>
+</ul>
+<div class="tab-content" id="mainTabContent">
+  <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+    sdrghjlk
+  </div>
+  <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+    <table class="table table-striped ">
+      <tbody>
+        <tr><td class="alert alert-warning">00:21:41 - Deviation on passive temperature sensor 3.</td></tr>
+        <tr><td>00:21:44 - Conditioner 3 turned <span class="state state-off">off</span>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

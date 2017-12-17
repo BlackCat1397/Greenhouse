@@ -1,0 +1,108 @@
+input[type=number] {
+  width: 80px;
+}
+
+
+input.plan-name:disabled {
+  color: black;
+  -webkit-text-fill-color: #000;
+  border: transparent solid 2px;
+}
+input.plan-name:disabled:focus{
+  outline:none;
+}
+
+.btn-add-period {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: solid 1px #eee;
+}
+
+.notifications-counter {
+  position: relative;
+  padding: 0.20rem .30rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+a {
+  color: #090;
+}
+
+table.plan{
+  font-size: 0.8rem;
+  flex: all;
+  border: solid 1px #eee;
+  border-collapse: collapse;
+  margin: 0px;
+}
+@media only screen and (min-width : 960px) {
+  table.plan {
+    display: table;  
+  }
+}
+
+.bg-dark--green {
+  background-color: #030
+  !important;
+}
+
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.state-on {
+  color: green;
+}
+
+.state-off {
+  color: red;
+}
+
+.oi {
+  color: gray;
+}
+
+.oi:hover {
+  color: black;
+}
+
+.draggable {
+  cursor: -webkit-move; /* Chrome 1-21, Safari 4+ */
+  cursor:    -moz-move; /* Firefox 1.5-26 */
+  cursor:         move; /* W3C standards syntax, should come least */
+}
+
+.draggable:active { 
+  cursor: -webkit-grabbing;
+  cursor:    -moz-grabbing;
+  cursor:         grabbing;
+}
+
+.oi {
+  cursor: pointer;
+}
+
+.oi-plus.oi--plan {
+  margin-bottom: 5px;
+}
+
+.oi-plus:hover{
+  color: #28a745;
+}
+
+.oi--plan {
+  font-size: 22px;
+}
+
+@media only screen and (max-width : 1210px) {
+  .img-plan {
+    width: 100%;
+  }
+}
+
+.img-plan {
+  height: 100% !important;
+}
