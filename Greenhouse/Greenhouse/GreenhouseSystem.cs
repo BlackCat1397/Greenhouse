@@ -50,7 +50,7 @@ namespace Greenhouse.System
       // Tell the timer what to do when it elapses
       timer.Elapsed += new ElapsedEventHandler(work);
       // Set it to go off every five seconds
-      timer.Interval = 10000;
+      timer.Interval = 5000;
     }
 
     public void Start() {

@@ -66,9 +66,19 @@ namespace Greenhouse.Controllers
       
       Period per = Program.ghs.GetPlan(plan_id).GetPeriod(period_id);
 
-      Parameters parameters = new Parameters(per.Params);
-      parameters.SetParameters(air_temp, water_temp, ph, humidity, lighting, fertilization);
-      per.Params = parameters;
+      if (air_temp != 0)
+        per.Params.AirTemperature = air_temp;
+      if (water_temp != 0)
+        per.Params.WaterTemperature = water_temp;
+      if (ph != 0)
+        per.Params.PH = ph;
+      if (fertilization != 0)
+        per.Params.Fertilization = fertilization;
+      if (humidity != 0)
+        per.Params.AirTemperature = humidity;
+      if (lighting != 0)
+        per.Params.AirTemperature = lighting;
+      
       per.Name = name;
 
 

@@ -11,6 +11,8 @@
 }
 
 var table = $(document.createElement('table'));
+var curFunction;
+
 createTable(10, 8, table);
 table.addClass('equipment-table');
 table.addClass('table-responsive');
@@ -18,8 +20,9 @@ table.addClass('table-responsive');
 
 var div = $('<div class="col-md-6">');
 $(div).append(table);
-#$('#page-container').children().first().prepend(div);
 
+$('#page-container').children().first().prepend(div);
+$('#page-container').children().first().prepend($('<div class="col-md-3">'));
 
 function getParam(type) {
   $.get( "/Status/GetParameters", "type=" + type, function( data ) {
@@ -28,16 +31,15 @@ function getParam(type) {
 
     for (var i = 0, len = data.length; i < len; i++) {
       var p = data[i];  
-      drawParam(p.val, p.x, p.y);
+      drawParam(p.val, p.x, p.y, type);
     }
   });
   getDevices();
-  sleep(200);
 
-  setTimeout(function(){getParam(type);}, 200);
+  curFunction = setTimeout(function(){getParam(type);}, 1000);
 }
 
-function drawParam(val, x, y) {
+function drawParam(val, x, y, type) {
   var cell = $('tr').eq(y).children().eq(x);
   val = Number(val).toFixed(2);
 
@@ -45,17 +47,57 @@ function drawParam(val, x, y) {
     cell.html('<span>' + val + '</span>');
   //cell.css({"padding-top": "5%", "background-color": "rgba(0, 50, 255, " + (1 - (val - 18)/6) + ")"});
 
-  var r, b, a;
-  if (val < 22) {
-    r = 0; b = 255;
-  } else if (val == 22) {
-    r = 255; b = 255;
-  } else {
-    r = 255; b = 0;
-  }
-  a = (abs(val - 22)/6);
+  var r, g, b, a;
+  console.log(type);
 
-  cell.css({"padding-top": "5%", "background-color": "rgba(" + r + ", 50, " + b + ", " + a + ")"});
+  if(type == "Air temperature" || type == "Water temperature")
+  {
+    var middle = type=="Air temperature"?22:20;
+
+    g = 50;
+    if (val < middle) {
+      r = 0; b = 255;
+    } else if (val == middle) {
+      r = 255; b = 255;
+    } else {
+      r = 255; b = 0;
+    }
+    a = (abs(val - middle)/6);
+  }
+  else if (type == "Lighting") {
+    r = (155/100)*val + 100;
+    r = Number(r).toFixed(0);
+    g = r;
+
+    b = 0;
+    a = 1;
+  }
+  else if (type == "Fertilizer")
+  {
+    r = 131; g = 42; b = 34;
+    a = val/100;
+  }
+  else if (type == "Humidity")
+  {
+    r = 65; g = 180; b = 255;
+    a = val/100;
+  }
+  else if (type == "PH")
+  {
+    var middle = 7;
+
+    r = 0; g = 0; b = 0;
+    if (val < middle) {
+      r = 255; g = 128;
+    } else if (val == middle) {
+      r = 255; b = 255;
+    } else {
+      r = 127; b = 255;
+    }
+    a = (abs(val - middle)/7);
+  }
+
+  cell.css({"padding-top": "5%", "background-color": "rgba(" + r + ", "+ g +", " + b + ", " + a + ")"});
 }
 
 $(document).ready(function() {
@@ -79,7 +121,6 @@ function getDevices() {
       var p = placed[i];
       drawDevice(p.type, p.x, p.y);
     }
-    //setTimeout(getSensors, 5000);
   });
 }
 
@@ -109,3 +150,33 @@ function sleep(milliseconds) {
 function abs(a) {
   return a >= 0 ? a : -a;
 }
+
+$('#btn-air').click(function() {
+  clearTimeout(curFunction);
+  getParam("Air temperature");
+});
+
+$('#btn-water').click(function() {
+  clearTimeout(curFunction);
+  getParam("Water temperature");
+});
+
+$('#btn-ph').click(function() {
+  clearTimeout(curFunction);
+  getParam("PH");
+});
+
+$('#btn-fert').click(function() {
+  clearTimeout(curFunction);
+  getParam("Fertilizer");
+});
+
+$('#btn-humidity').click(function() {
+  clearTimeout(curFunction);
+  getParam("Humidity");
+});
+
+$('#btn-light').click(function() {
+  clearTimeout(curFunction);
+  getParam("Lighting");
+});

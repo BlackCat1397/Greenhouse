@@ -36,7 +36,13 @@ namespace Greenhouse.Models.Field
 
       devices.Add(new Device("conditioner"));
       devices.Add(new Device("conditioner"));
+      devices.Add(new Device("conditioner"));
+      devices.Add(new Device("conditioner"));
+      devices.Add(new Device("conditioner"));
       devices.Add(new Device("heater"));
+      devices.Add(new Device("heater"));
+      devices.Add(new Device("heater"));
+      devices.Add(new Device("lighter"));
       devices.Add(new Device("lighter"));
       devices.Add(new Device("fertilizer"));
       devices.Add(new Device("humidifier"));
@@ -46,10 +52,13 @@ namespace Greenhouse.Models.Field
 
       for (int i = 0; i < width; i++)
         for (int j = 0; j < length; j++)
-          ParametersField[i, j] = new Parameters(23, 6, 7, 8, 9, 10);
+          ParametersField[i, j] = new Parameters(23, 21, 14, 8, 0, 0);
     }
 
     public void Work() {
+      for (int i = 0; i < width; i++)
+        for (int j = 0; j < length; j++)
+          ParametersField[i, j].Lighting = 0;
       foreach (Device d in devices)
       {
         if (d.Placed)

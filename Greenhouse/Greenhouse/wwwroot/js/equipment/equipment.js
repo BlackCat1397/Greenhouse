@@ -110,7 +110,7 @@ function getSensors() {
 
 
 function placeDevice(type) {
-  alert("Add " + type);
+  //alert("Add " + type);
   $('td').off('click');
 
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки

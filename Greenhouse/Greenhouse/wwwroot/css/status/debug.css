@@ -1,0 +1,35 @@
+﻿
+
+#btn-humidity {
+  border-color: #add8e6
+}
+
+#btn-fert {
+  border-color: brown
+}
+
+#btn-light {
+  border-color: #fff04e
+}
+
+#btn-air {
+  border-color: #ddf
+}
+
+#btn-water {
+  border-color: blue
+}
+
+#btn-ph {
+  border-color: green
+}
+
+.btn {
+  border: 2px solid;
+}
+
+@media (max-width: 480px) {
+  .equipment-table {
+    display: block !important;
+  }
+}
