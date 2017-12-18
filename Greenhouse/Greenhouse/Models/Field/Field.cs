@@ -9,8 +9,8 @@ namespace Greenhouse.Models.Field
 {
   public class Field
   {
-    private int width = 10;
-    private int length = 8;
+    public const int width = 10;
+    public const int length = 8;
 
     private Sensor[,] SensorsField = new Sensor[10, 8];
     private Device[,] DevicesField = new Device[10, 8];
@@ -35,6 +35,7 @@ namespace Greenhouse.Models.Field
       sensors.Add(new Sensor());
 
       devices.Add(new Device("conditioner"));
+      devices.Add(new Device("conditioner"));
       devices.Add(new Device("heater"));
       devices.Add(new Device("lighter"));
       devices.Add(new Device("fertilizer"));
@@ -45,7 +46,19 @@ namespace Greenhouse.Models.Field
 
       for (int i = 0; i < width; i++)
         for (int j = 0; j < length; j++)
-          ParametersField[i, j] = new Parameters(5, 0, 0, 0, 0, 0);
+          ParametersField[i, j] = new Parameters(23, 6, 7, 8, 9, 10);
+    }
+
+    public void Work() {
+      foreach (Device d in devices)
+      {
+        if (d.Placed)
+          d.Work();
+      }
+    }
+
+    public Parameters cell(int x, int y) {
+      return ParametersField[x, y];
     }
 
     public void RefreshSensors()
@@ -68,10 +81,13 @@ namespace Greenhouse.Models.Field
       Device dev = devices.Find(d => !d.Placed && d.Type == type);
       if (dev != null)
       {
-        PlaceDevice(dev, x, y);
-        return dev;
+        if (PlaceDevice(dev, x, y))
+          return dev;
+        else
+          return null;
       }
-      else return null;
+      else
+        return null;
     }
 
     public bool PlaceDevice(Device dev, int x, int y) {
@@ -84,9 +100,17 @@ namespace Greenhouse.Models.Field
       if (devices.Find(d => !d.Placed) == null)
         return false;
 
-      dev.Placed = true;
+      dev.Place(x, y);
       DevicesField[x, y] = dev;
       return true;
+    }
+
+    public string UnplaceDevice(int x, int y)
+    {
+      string deviceType = DevicesField[x, y].Type;
+      DevicesField[x, y].Unplace();
+      DevicesField[x, y] = null;
+      return deviceType;
     }
 
     public Sensor PlaceSensor(string param, int x, int y)
@@ -205,13 +229,13 @@ namespace Greenhouse.Models.Field
       return res;
     }
 
-    public string GetCurrentTemp() {
+    public string GetCurrentParams(string type) {
       string res = "{\"cells\":[";
       for (int i = 0; i < width; i++)
         for (int j = 0; j < length; j++) {
           if (i + j != 0)
             res += ", ";
-          res += "{\"val\":" + ParametersField[i, j].AirTemperature + ", \"x\":" + i + ", \"y\":"+ j + "}";
+          res += "{\"val\":" + ParametersField[i, j].ToDict().GetValueOrDefault(type) + ", \"x\":" + i + ", \"y\":"+ j + "}";
         }
       res += "]}";
       return res;

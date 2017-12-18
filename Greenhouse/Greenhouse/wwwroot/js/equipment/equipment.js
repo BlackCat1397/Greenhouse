@@ -81,6 +81,15 @@ function drawSensor(type, x, y) {
   cell.addClass('sensor');
 }
 
+function drawSensor(type, x, y) {
+  var color = [["air", "#ddf"], ["humidity", "#add8e6"], ["fert", "brown"], ["light", "#fff04e"], ["water", "blue"], ["ph", "green"]];
+  color = new Map(color);
+
+  var cell = $('tr').eq(y).children().eq(x);
+  cell.css('background-color', color.get(type));
+  cell.addClass('sensor');
+}
+
 
 function getSensors() {
   $.get( "/Equipment/GetSensors", function( data ) {
@@ -123,6 +132,31 @@ function placeDevice(type) {
     $('td').off('click');
   });
 }
+
+function deleteDevice(e) {
+  if(!confirm('Delete?')) {
+    return false;
+  }
+
+  var x = $(this).parent().index();          //($this) – ячейка, на которую кликнули, .index() – её номер
+  var y = $(this).parent().parent().index()  //.parent() – то, в чем она лежит
+  var cell = $(this).parent();
+
+  $.ajax({
+    url: '/Equipment/UnplaceDevice/',
+    data: 'x=' + x + '&y=' + y,
+    type: 'DELETE',
+    success: function(resp) {
+          
+          var q =  $('#' + resp + '-unplaced').text();
+          $('#' + resp + '-unplaced').text(parseInt(q)+1);
+          cell.html("");
+          cell.removeClass("device");
+    },
+    error: function(){alert('Something goes wrong! Try again.');}
+  });
+}
+
 
 function drawDevice(type, x, y) {
   var icon = [["lighter", "sun"], ["conditioner", "cloud"], ["heater", "fire"], ["fertilizer", "beaker"], ["humidifier", "droplet"]];
@@ -193,5 +227,5 @@ $('#add-humidifier').on('click', function(e) {
 
 
 $('tbody').on('click', '.sensor', deleteSensor);
-$('tbody').on('click', 'span.oi', deleteSensor);
+$('tbody').on('click', 'span.oi', deleteDevice);
 

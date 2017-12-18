@@ -16,9 +16,13 @@ namespace Greenhouse.Controllers
       return View();
     }
 
-    public string GetParameters() {
+    public IActionResult Debug() {
+      return View("Debug");
+    }
+
+    public string GetParameters(string type) {
       
-      return Program.ghs.field.GetCurrentTemp();
+      return Program.ghs.field.GetCurrentParams(type);
     }
   }
 }

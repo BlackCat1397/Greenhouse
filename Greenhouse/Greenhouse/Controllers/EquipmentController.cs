@@ -49,6 +49,12 @@ namespace Greenhouse.Controllers
         return "{\"x\":" + x.ToString() + ", \"y\":" + y.ToString() + ", \"type\":\"" + type + "\"}";
     }
 
+    [HttpDelete]
+    public string UnplaceDevice(int x, int y)
+    {
+      return Program.ghs.field.UnplaceDevice(x, y);
+    }
+
     public void RemoveDevice(int id)
     {
 

@@ -21,8 +21,8 @@ $(div).append(table);
 $('#page-container').children().first().prepend(div);
 
 
-function getTemp() {
-  $.get( "/Status/GetParameters", function( data ) {
+function getParam(type) {
+  $.get( "/Status/GetParameters", "type=" + type, function( data ) {
     data = $.parseJSON(data);
     data = data.cells;
 
@@ -30,14 +30,13 @@ function getTemp() {
       var p = data[i];  
       drawParam(p.val, p.x, p.y);
     }
-    setTimeout(getTemp, 1000);
   });
 }
 
 function drawParam(val, x, y) {
   var cell = $('tr').eq(y).children().eq(x);
+  val = Number(val).toFixed(2);
+  cell.css("background-color", "rgba(0, 50, 255, " + 0.6 + (val - 18)/4 + ")");
   cell.html('<span>' + val + '</span>');
-  cell.css("padding-top", "5%");
+  cell.css({"padding-top": "5%", "background-color": "rgba(0, 0, 255, " + (1 - (val - 18)/6) + ")"});
 }
-
-$(document).onLoad(getTemp);

@@ -23,6 +23,7 @@ namespace Greenhouse
     {
       ghs = new GreenhouseSystem();
       ghs.Configure();
+      ghs.Start();
 
       BuildWebHost(args).Run();
     }

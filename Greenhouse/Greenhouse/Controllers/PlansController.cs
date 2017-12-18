@@ -27,6 +27,12 @@ namespace Greenhouse.Controllers
       return View(plans);
     }
 
+    [HttpGet]
+    public string ActivatePlan(int id)
+    {
+      return Program.ghs.ActivatePlan(id).ToString();
+    }
+
     [HttpPost]
     public string Rename([FromQuery]int id, [FromQuery]string new_name)
     {
