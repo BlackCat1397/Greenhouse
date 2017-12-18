@@ -31,6 +31,7 @@ namespace Greenhouse.Models.Field
       sensors.Add(new Sensor("humidity"));
       sensors.Add(new Sensor("light"));
       sensors.Add(new Sensor("light"));
+      sensors.Add(new Sensor("fertilization"));
       sensors.Add(new Sensor());
       sensors.Add(new Sensor());
 
