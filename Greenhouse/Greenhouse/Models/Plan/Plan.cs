@@ -76,5 +76,15 @@ namespace Greenhouse.Models.Plan
     {
       return _periods.Find(x => x.ID == id);
     }
+
+    public Period GetCurrentPeriod(TimeSpan ts) {
+      for (int i = 0; i < _periods.Count; i++)
+      {
+        ts.Subtract(new TimeSpan((int)_periods[i].Duration, 0, 0));
+        if (ts.TotalHours < 0)
+          return _periods[i];
+      }
+      return _periods[_periods.Count];
+    }
   }
 }

@@ -31,7 +31,7 @@ namespace Greenhouse.Models.Field
       sensors.Add(new Sensor("humidity"));
       sensors.Add(new Sensor("light"));
       sensors.Add(new Sensor("light"));
-      sensors.Add(new Sensor("fertilization"));
+      sensors.Add(new Sensor("fert"));
       sensors.Add(new Sensor());
       sensors.Add(new Sensor());
 
@@ -65,6 +65,7 @@ namespace Greenhouse.Models.Field
         if (d.Placed)
           d.Work();
       }
+      RefreshSensors();
     }
 
     public Parameters cell(int x, int y) {
@@ -74,16 +75,14 @@ namespace Greenhouse.Models.Field
     public void RefreshSensors()
     {
       Dictionary<string, string> Keys = new Dictionary<string, string>(){ { "air", "Air temperature"}, { "ph", "PH" }, { "water", "Water temperature" },
-        { "light", "Lighting" }, { "fertilizer", "Fertilizer" }, { "humidity", "Humidity" }};
-      for (int i = 0; i < length; i++)
-      {
-        for (int j = 0; j < width; j++)
+        { "light", "Lighting" }, { "fert", "Fertilizer" }, { "humidity", "Humidity" }};
+      for (int i = 0; i < width; i++)
+        for (int j = 0; j < length; j++)
         {
-          Sensor sens;
-          if ((sens = SensorsField[i, j]) != null)
+          Sensor sens = SensorsField[i, j];
+          if (sens != null)
             sens.Value = ParametersField[i, j].ToDict().GetValueOrDefault(Keys.GetValueOrDefault(sens.Param));
         }
-      }
     }
 
     public Device PlaceDevice(string type, int x, int y)
@@ -138,7 +137,7 @@ namespace Greenhouse.Models.Field
 
 
       SensorsField[x, y] = sens;
-      sens.Placed = true;
+      sens.Place(x, y);
       return sens;
     }
 
@@ -154,14 +153,15 @@ namespace Greenhouse.Models.Field
         return false;
 
       SensorsField[x, y] = sens;
-      sens.Placed = true;
+      sens.Place(x, y);
       return true;
     }
 
     public string UnplaceSensor(int x, int y) {
       string sensorType = SensorsField[x, y].Param;
-      SensorsField[x, y].Placed = false;
+      SensorsField[x, y].Unplace();
       SensorsField[x, y] = null;
+
       return sensorType;
     }
 
@@ -173,7 +173,7 @@ namespace Greenhouse.Models.Field
       res += "\"water\":" + unplaced.FindAll(s => s.Param == "water").Count + ", ";
       res += "\"ph\":" + unplaced.FindAll(s => s.Param == "ph").Count + ", ";
       res += "\"humidity\":" + unplaced.FindAll(s => s.Param == "humidity").Count + ", ";
-      res += "\"fertilizer\":" + unplaced.FindAll(s => s.Param == "fertilizer").Count + ", ";
+      res += "\"fert\":" + unplaced.FindAll(s => s.Param == "fert").Count + ", ";
       res += "\"light\":" + unplaced.FindAll(s => s.Param == "light").Count;
 
       res += "}";
@@ -201,6 +201,7 @@ namespace Greenhouse.Models.Field
       return res;
     }
 
+    public List<Sensor> GetPlacedSensorsList => sensors.FindAll(s => s.Placed);
 
     public string GetUnplacedDevices()
     {
@@ -239,6 +240,8 @@ namespace Greenhouse.Models.Field
       return res;
     }
 
+    public List<Device> GetPlacedDevicesList => devices.FindAll(d => d.Placed);
+
     public string GetCurrentParams(string type) {
       string res = "{\"cells\":[";
       for (int i = 0; i < width; i++)
@@ -249,6 +252,24 @@ namespace Greenhouse.Models.Field
         }
       res += "]}";
       return res;
+    }
+
+    public Sensor GetNearestSensor(int x, int y, string type) {
+      int dist = width + length;
+      Sensor res = null;
+
+      for (int i = 0; i < width; i++)
+        for (int j = 0; j < length; j++) {
+          Sensor sens = SensorsField[i, j];
+          if (sens != null && sens.Param == type && sens.Dist(i, j) < dist){
+            dist = sens.Dist(i, j);
+            res = sens;
+          }
+          //res = SensorsField[i, j];
+        }
+          
+
+        return res;
     }
   } 
 }

@@ -43,7 +43,58 @@ namespace Greenhouse.System
     private void work(object source, ElapsedEventArgs e) {
       Console.WriteLine("1337 5|>34|<");
       time += new TimeSpan(0, 30, 0);
+      SetDevices();
       field.Work();
+    }
+
+    private void SetDevices() {
+      Parameters Ok = new Parameters(25, 23, 10, 60, 80, 42);
+      List<Device> devices = field.GetPlacedDevicesList;
+      foreach (Device d in devices) {
+        Sensor nearest = field.GetNearestSensor(d.X, d.Y, d.TargetParamType);
+        if (nearest != null) {
+          switch (d.Type)
+          {
+            case "conditioner":
+              if (nearest.Value > Ok.AirTemperature)
+                d.Switch("on");
+              else
+                d.Switch("off");
+              break;
+
+            case "heater":
+              if (nearest.Value < Ok.AirTemperature)
+                d.Switch("on");
+              else
+                d.Switch("off");
+              break;
+
+            case "lighter":
+              if (nearest.Value < Ok.Lighting)
+                d.Switch("on");
+              else
+                d.Switch("off");
+              break;
+
+            case "fertilizer":
+              if (nearest.Value < Ok.Fertilization)
+                d.Switch("on");
+              else
+                d.Switch("off");
+              break;
+
+            case "humidifier":
+              if (nearest.Value < Ok.Humidity)
+                d.Switch("on");
+              else
+                d.Switch("off");
+              break;
+
+            default:
+              return;
+          }
+        }
+      }
     }
 
     private void InitTimer() {

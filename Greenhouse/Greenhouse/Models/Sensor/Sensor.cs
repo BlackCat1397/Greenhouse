@@ -9,6 +9,8 @@ namespace Greenhouse.Models.Equipment
     private string parameter;
     private int _id;
     private double value;
+    private int _x;
+    private int _y;
 
     public Sensor()
     {
@@ -44,6 +46,30 @@ namespace Greenhouse.Models.Equipment
     public double Value {
       get => value;
       set => this.value = value;
+    }
+
+    public int Dist(int x, int y)
+    {
+      int dx = Math.Abs(_x - x);
+      int dy = Math.Abs(_y - y);
+      return dx + dy == 0 ? 1 : dx + dy;
+    }
+
+    public bool Place(int x, int y)
+    {
+      placed = true;
+      _x = x;
+      _y = y;
+      return true;
+    }
+
+    public bool Unplace()
+    {
+      if (!placed)
+        return false;
+
+      placed = false;
+      return true;
     }
   }
 }

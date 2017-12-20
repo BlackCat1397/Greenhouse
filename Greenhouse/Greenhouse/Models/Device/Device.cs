@@ -9,26 +9,33 @@ namespace Greenhouse.Models.Equipment
 
     private const double cond_const = 2;
     private const double heater_const = 3;
-    private const double min_air_temp = 18;
-    private const double max_air_temp = 27;
     private const double light_const = 100;
     private const double fert_const = 5;
-    private const double max_fert = 100;
     private const double hum_const = 7;
-
 
     private int _id;
     private int _x;
     private int _y;
     string type;
     private bool placed;
-
+    private bool on;
+    private string targetParamType;
 
     public Device(string t)
     {
       _id = last_id++;
       placed = false;
+      on = false;
       this.Type = t;
+      this.TargetParamType = t;
+    }
+
+    public int X {
+      get => _x;
+    }
+
+    public int Y {
+      get => _y; 
     }
 
     public int ID
@@ -39,6 +46,19 @@ namespace Greenhouse.Models.Equipment
     public bool Placed
     {
       get => placed;
+    }
+
+    public bool On {
+      get;
+    }
+
+    public bool Switch(string s) {
+      if (s == "on")
+        on = true;
+      else
+        on = false;
+      
+      return On;
     }
 
     public bool Place(int x, int y)
@@ -64,7 +84,40 @@ namespace Greenhouse.Models.Equipment
       set => type = value;
     }
 
-    private int Dist(int x, int y) {
+    public string TargetParamType {
+      get => targetParamType;
+      set 
+      {
+        switch (value)
+        {
+          case "conditioner":
+            targetParamType = "air";
+            break;
+
+          case "heater":
+            targetParamType = "air";
+            break;
+
+          case "lighter":
+            targetParamType = "light";
+            break;
+
+          case "fertilizer":
+            targetParamType = "fert";
+            break;
+
+          case "humidifier":
+            targetParamType = "humidity";
+            break;
+
+          default:
+            return;
+        }
+      }
+    }
+
+    private int Dist(int x, int y)
+    {
       int dx = Math.Abs(_x - x);
       int dy = Math.Abs(_y - y);
       return dx + dy == 0 ? 1 : dx + dy;
@@ -73,44 +126,47 @@ namespace Greenhouse.Models.Equipment
 
     public void Work()
     {
-      for (int i = 0; i < Field.Field.width; i++)
-        for (int j = 0; j < Field.Field.length; j++)
-        {
-          Greenhouse.Models.Plan.Parameters cell = Program.ghs.field.cell(i, j);
-          int dist = this.Dist(i, j);
-          switch (type)
+      if (type == "fertilizer") 
+        Console.WriteLine("!");
+      if (on)
+        for (int i = 0; i < Field.Field.width; i++)
+          for (int j = 0; j < Field.Field.length; j++)
           {
-            case "conditioner":
-              cell.AirTemperature -= cond_const / Math.Pow(dist, 1.2);
-              cell.WaterTemperature = cell.AirTemperature - 2;
-              break;  
+            Greenhouse.Models.Plan.Parameters cell = Program.ghs.field.cell(i, j);
+            int dist = this.Dist(i, j);
+            switch (type)
+            {
+              case "conditioner":
+                cell.AirTemperature -= cond_const / Math.Pow(dist, 1.2);
+                cell.WaterTemperature = cell.AirTemperature - 2;
+                break;
 
-            case "heater":
-              cell.AirTemperature += heater_const / Math.Pow(dist, 1.2);
-              cell.WaterTemperature = cell.AirTemperature - 2;
-              break;
+              case "heater":
+                cell.AirTemperature += heater_const / Math.Pow(dist, 1.2);
+                cell.WaterTemperature = cell.AirTemperature - 2;
+                break;
 
-            case "lighter":
-              double val_from_this = light_const / Math.Pow(dist, 0.6);
-              if (val_from_this > cell.Lighting)
-                cell.Lighting = val_from_this;
-              break;
+              case "lighter":
+                double val_from_this = light_const / Math.Pow(dist, 0.6);
+                if (val_from_this > cell.Lighting)
+                  cell.Lighting = val_from_this;
+                break;
 
-            case "fertilizer":
-              double df = fert_const / Math.Pow(dist, 1.2);
-              cell.Fertilization += df;
-              cell.PH -= df/20;
-              break;
+              case "fertilizer":
+                double df = fert_const / Math.Pow(dist, 1.2);
+                cell.Fertilization += df;
+                cell.PH -= df / 20;
+                break;
 
-            case "humidifier":
-              double dh = hum_const / Math.Pow(dist, 1.2);
-              cell.Humidity += dh;
-              break;
+              case "humidifier":
+                double dh = hum_const / Math.Pow(dist, 1.2);
+                cell.Humidity += dh;
+                break;
 
-            default:
-              return;
+              default:
+                return;
+            }
           }
-        }
     }
   }
 }
