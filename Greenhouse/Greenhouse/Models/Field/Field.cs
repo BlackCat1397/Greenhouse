@@ -53,10 +53,12 @@ namespace Greenhouse.Models.Field
 
       for (int i = 0; i < width; i++)
         for (int j = 0; j < length; j++)
-          ParametersField[i, j] = new Parameters(23, 21, 14, 8, 0, 0);
+          ParametersField[i, j] = new Parameters(23, 21, 0, 8, 0, 0);
     }
 
-    public void Work() {
+    public void Work()
+    {
+      EmulatePlants();
       for (int i = 0; i < width; i++)
         for (int j = 0; j < length; j++)
           ParametersField[i, j].Lighting = 0;
@@ -68,7 +70,8 @@ namespace Greenhouse.Models.Field
       RefreshSensors();
     }
 
-    public Parameters cell(int x, int y) {
+    public Parameters cell(int x, int y)
+    {
       return ParametersField[x, y];
     }
 
@@ -99,7 +102,8 @@ namespace Greenhouse.Models.Field
         return null;
     }
 
-    public bool PlaceDevice(Device dev, int x, int y) {
+    public bool PlaceDevice(Device dev, int x, int y)
+    {
       if (DevicesField[x, y] != null)
         return false;
       if (x > width || x < 0)
@@ -157,7 +161,8 @@ namespace Greenhouse.Models.Field
       return true;
     }
 
-    public string UnplaceSensor(int x, int y) {
+    public string UnplaceSensor(int x, int y)
+    {
       string sensorType = SensorsField[x, y].Param;
       SensorsField[x, y].Unplace();
       SensorsField[x, y] = null;
@@ -165,7 +170,8 @@ namespace Greenhouse.Models.Field
       return sensorType;
     }
 
-    public string GetUnplacedSensors() {
+    public string GetUnplacedSensors()
+    {
       string res = "\"unplaced\":{";
 
       List<Sensor> unplaced = sensors.FindAll(s => !s.Placed);
@@ -180,7 +186,8 @@ namespace Greenhouse.Models.Field
       return res;
     }
 
-    public string GetPlacedSensors() {
+    public string GetPlacedSensors()
+    {
       string res = "\"placed\":[";
       bool first = true;
       for (int i = 0; i < length; i++)
@@ -192,7 +199,12 @@ namespace Greenhouse.Models.Field
           {
             if (!first) res += ", ";
             first = false;
-            res += "{\"ID\":" + s.ID + ", \"x\":" + j + ", \"y\":" + i + ", \"type\":\"" + s.Param + "\"}";
+            res += "{\"ID\":" + s.ID;
+            res += ", \"x\":" + j;
+            res += ", \"y\":" + i;
+            res += ", \"type\":\"" + s.Param + "\"";
+            res += ", \"value\":" + s.Value;
+            res += "}";
           }
         }
       }
@@ -231,7 +243,7 @@ namespace Greenhouse.Models.Field
           {
             if (!first) res += ", ";
             first = false;
-            res += "{\"ID\":" + d.ID + ", \"x\":" + j + ", \"y\":" + i + ", \"type\":\"" + d.Type + "\"}";
+            res += "{\"ID\":" + d.ID + ", \"x\":" + j + ", \"y\":" + i + ", \"type\":\"" + d.Type + "\", \"state\":\"" + d.State + "\"}";
           }
         }
       }
@@ -242,34 +254,48 @@ namespace Greenhouse.Models.Field
 
     public List<Device> GetPlacedDevicesList => devices.FindAll(d => d.Placed);
 
-    public string GetCurrentParams(string type) {
+    public string GetCurrentParams(string type)
+    {
       string res = "{\"cells\":[";
       for (int i = 0; i < width; i++)
-        for (int j = 0; j < length; j++) {
+        for (int j = 0; j < length; j++)
+        {
           if (i + j != 0)
             res += ", ";
-          res += "{\"val\":" + ParametersField[i, j].ToDict().GetValueOrDefault(type) + ", \"x\":" + i + ", \"y\":"+ j + "}";
+          res += "{\"val\":" + ParametersField[i, j].ToDict().GetValueOrDefault(type) + ", \"x\":" + i + ", \"y\":" + j + "}";
         }
       res += "]}";
       return res;
     }
 
-    public Sensor GetNearestSensor(int x, int y, string type) {
+    public Sensor GetNearestSensor(int x, int y, string type)
+    {
       int dist = width + length;
       Sensor res = null;
 
       for (int i = 0; i < width; i++)
-        for (int j = 0; j < length; j++) {
+        for (int j = 0; j < length; j++)
+        {
           Sensor sens = SensorsField[i, j];
-          if (sens != null && sens.Param == type && sens.Dist(i, j) < dist){
+          if (sens != null && sens.Param == type && sens.Dist(i, j) < dist)
+          {
             dist = sens.Dist(i, j);
             res = sens;
           }
           //res = SensorsField[i, j];
         }
-          
 
-        return res;
+      return res;
     }
-  } 
+
+    private void EmulatePlants()
+    {
+      for (int i = 0; i < width; i++)
+        for (int j = 0; j < length; j++)
+        {
+          ParametersField[i, j].Fertilization -= 0.1;
+          ParametersField[i, j].Humidity -= 0.07;
+        }
+    }
+  }
 }

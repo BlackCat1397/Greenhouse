@@ -17,7 +17,7 @@ namespace Greenhouse.Models.Plan
     public Parameters()
     {
       _airTemperature = 22;
-      _waterTemperature = 23;
+      _waterTemperature = 20;
       _ph = 5.6;
       _humidity = 92;
       _lightening = 80;
@@ -151,6 +151,18 @@ namespace Greenhouse.Models.Plan
 
         _fertilization = value;
       }
+    }
+
+    public string ToJson (){
+      string res = "{";
+      res += "\"air\":" + AirTemperature;
+      res += ", \"water\":" + WaterTemperature;
+      res += ", \"fert\":" + Fertilization;
+      res += ", \"ph\":" + PH;
+      res += ", \"light\":" + Lighting;
+      res += ", \"humidity\":" + Humidity;
+      res += "}";
+      return res;
     }
   }
 }

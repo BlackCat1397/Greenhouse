@@ -78,13 +78,13 @@ namespace Greenhouse.Models.Plan
     }
 
     public Period GetCurrentPeriod(TimeSpan ts) {
-      for (int i = 0; i < _periods.Count; i++)
+      for (int i = 0; i < _periods.Count - 1; i++)
       {
-        ts.Subtract(new TimeSpan((int)_periods[i].Duration, 0, 0));
-        if (ts.TotalHours < 0)
+        if (ts.TotalHours < _periods[i].Duration)
           return _periods[i];
+        ts.Subtract(new TimeSpan((int)_periods[i].Duration, 0, 0));
       }
-      return _periods[_periods.Count];
+      return _periods[_periods.Count - 1];
     }
   }
 }

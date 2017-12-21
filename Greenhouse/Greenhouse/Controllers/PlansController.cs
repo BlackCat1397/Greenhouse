@@ -98,5 +98,9 @@ namespace Greenhouse.Controllers
 
       return "OK";
     }
+
+    public string CurrentPeriod() {
+      return Program.ghs.CurrentPeriod.Params.ToJson();
+    }
   }
 }

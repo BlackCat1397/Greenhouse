@@ -1,8 +1,38 @@
-﻿
+﻿.sensor-id {
+  background-color: white;
+  line-height: 1.1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 2.3vw
+}
+
+.device-id {
+  background-color: white;
+  line-height: 1.1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.3vw;
+  z-index:5;
+}
+
+@media (min-width: 768px) {
+  .sensor-id {
+    font-size: 1.15vw
+  }
+
+  .device-id {
+    font-size: 1.15vw;
+  }
+}
+
+
 
 
 .equipment-table td {
-  position: relative;
+  position: relative
 }
 
 .equipment-table td .oi {
@@ -10,90 +40,89 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 7vw;
+  font-size: 7vw
 }
 
 @media (min-width: 768px) {
   .equipment-table td .oi {
-    font-size: 3.5vw;
+    font-size: 3.5vw
   }
 }
 
 
 
 #page-container {
-  margin-top: 10px;
+  margin-top: 10px
 }
 
 .equipment-table {
   border: solid 2px black;
   border-collapse: collapse;
-  display: table;
+  display: table
 }
 
-.equipment-table td {
-  border: solid 1px green;
-  width: 10%;
-  padding-top: 10%;
-  padding-bottom: 0px;
-}
+  .equipment-table td {
+    border: solid 1px green;
+    width: 10%;
+    padding-top: 10%;
+    padding-bottom: 0px
+  }
 
 span.oi-dashboard {
   width: 26px;
   height: 26px;
-  border: solid 3px;  padding: 3px;
+  border: solid 3px;
+  padding: 3px
 }
 
 #add-sensor-humidity {
-  border-color: #add8e6;
+  border-color: #add8e6
 }
 
 #add-sensor-fert {
-  border-color: brown;
+  border-color: brown
 }
 
 #add-sensor-light {
-  border-color: #fff04e;
+  border-color: #fff04e
 }
 
 #add-sensor-air {
-  border-color: #ddf;
+  border-color: #ddf
 }
 
 #add-sensor-water {
-  border-color: blue;
+  border-color: blue
 }
 
 #add-sensor-ph {
-  border-color: green;
+  border-color: green
 }
 
 .oi:empty:before {
-  margin-left: -1px;
+  margin-left: -1px
 }
 
 .oi-sun {
-  color: #fff04e;
+  color: #fff04e
 }
 
 .oi-cloud {
-  color: #ddf;
+  color: #ddf
 }
 
 .oi-fire {
-  color: red;
+  color: red
 }
 
 .oi-beaker {
-  color: brown;
+  color: brown
 }
 
 .oi-droplet {
-  color: #add8e6;
+  color: #add8e6
 }
 
 .sensor .oi {
-  color: #FFF;
+  color: #FFF
 }
-
-

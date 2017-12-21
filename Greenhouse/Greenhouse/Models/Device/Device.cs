@@ -10,7 +10,7 @@ namespace Greenhouse.Models.Equipment
     private const double cond_const = 2;
     private const double heater_const = 3;
     private const double light_const = 100;
-    private const double fert_const = 5;
+    private const double fert_const = 3;
     private const double hum_const = 7;
 
     private int _id;
@@ -50,6 +50,15 @@ namespace Greenhouse.Models.Equipment
 
     public bool On {
       get;
+    }
+
+    public string State {
+      get {
+        if (on)
+          return "On";
+        else
+          return "Off";
+      }
     }
 
     public bool Switch(string s) {
@@ -155,7 +164,7 @@ namespace Greenhouse.Models.Equipment
               case "fertilizer":
                 double df = fert_const / Math.Pow(dist, 1.2);
                 cell.Fertilization += df;
-                cell.PH -= df / 20;
+                cell.PH += df / 20;
                 break;
 
               case "humidifier":

@@ -41,7 +41,11 @@ namespace Greenhouse.System
     }
 
     private void work(object source, ElapsedEventArgs e) {
+      //if(time.TotalHours == 0.5)
+        //Stop();
+      _currentPeriod = _currentPlan.GetCurrentPeriod(time);
       Console.WriteLine("1337 5|>34|<");
+      Console.WriteLine("Time {0}, id {1}", time.ToString(), _currentPeriod.ID);
       time += new TimeSpan(0, 30, 0);
       SetDevices();
       field.Work();
@@ -49,6 +53,7 @@ namespace Greenhouse.System
 
     private void SetDevices() {
       Parameters Ok = new Parameters(25, 23, 10, 60, 80, 42);
+      Ok = _currentPeriod.Params;
       List<Device> devices = field.GetPlacedDevicesList;
       foreach (Device d in devices) {
         Sensor nearest = field.GetNearestSensor(d.X, d.Y, d.TargetParamType);
@@ -101,7 +106,7 @@ namespace Greenhouse.System
       // Tell the timer what to do when it elapses
       timer.Elapsed += new ElapsedEventHandler(work);
       // Set it to go off every five seconds
-      timer.Interval = 5000;
+      timer.Interval = 3000;
     }
 
     public void Start() {
@@ -111,6 +116,7 @@ namespace Greenhouse.System
     public void Stop()
     {
       timer.Enabled = false;
+      timer.Stop();
     }
 
     public Plan AddPlan() {
@@ -144,8 +150,8 @@ namespace Greenhouse.System
         return false;
     }
 
-    public void work() {
-      
+    public Period CurrentPeriod {
+      get => _currentPeriod;
     }
   }
 }

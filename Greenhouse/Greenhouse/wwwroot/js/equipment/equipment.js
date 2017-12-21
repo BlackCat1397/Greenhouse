@@ -81,16 +81,6 @@ function drawSensor(type, x, y) {
   cell.addClass('sensor');
 }
 
-function drawSensor(type, x, y) {
-  var color = [["air", "#ddf"], ["humidity", "#add8e6"], ["fert", "brown"], ["light", "#fff04e"], ["water", "blue"], ["ph", "green"]];
-  color = new Map(color);
-
-  var cell = $('tr').eq(y).children().eq(x);
-  cell.css('background-color', color.get(type));
-  cell.addClass('sensor');
-}
-
-
 function getSensors() {
   $.get( "/Equipment/GetSensors", function( data ) {
     data = $.parseJSON(data);
