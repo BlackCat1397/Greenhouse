@@ -1,5 +1,5 @@
 ﻿function createTable(width, height, table) {
-  table.id("field");
+  table.addClass("field");
   tbody = table.append('<tbody>');
 
   for(i = 0; i < height; i++) {
@@ -12,7 +12,6 @@
 }
 
 var table = $(document.createElement('table'));
-var fieldTemplate;
 createTable(10, 8, table);
 table.addClass('equipment-table');
 table.addClass('table-responsive');
@@ -48,10 +47,16 @@ function drawSensor(type, x, y, id) {
   var color = [["air", "#ddf"], ["humidity", "#add8e6"], ["fert", "brown"], ["light", "#fff04e"], ["water", "blue"], ["ph", "green"]];
   color = new Map(color);
 
-  var cell = $('tr').eq(y).children().eq(x);
+  var cell = fieldTemplate.find('tr').eq(y).children().eq(x);
   cell.find(".sensor-id").text(id);
   cell.css('background-color', color.get(type));
   cell.addClass('sensor');
+
+
+  /*var cell = $('tr').eq(y).children().eq(x);
+  cell.find(".sensor-id").text(id);
+  cell.css('background-color', color.get(type));
+  cell.addClass('sensor'); */
 }
 
 function buildSensorsTable(sensors) {
@@ -93,6 +98,7 @@ function getSensors() {
       drawSensor(p.type, p.x, p.y, p.ID);
     }
     buildSensorsTable(placed);
+    getDevices();
   });
 }
 
@@ -115,11 +121,19 @@ function buildDevicesTable(devices) {
 function drawDevice(type, x, y, id) {
   var icon = [["lighter", "sun"], ["conditioner", "cloud"], ["heater", "fire"], ["fertilizer", "beaker"], ["humidifier", "droplet"]];
   icon = new Map(icon);
-  var cell = $()('tr').eq(y).children().eq(x);
+
+  var cell = fieldTemplate.find('tr').eq(y).children().eq(x);
   cell.find('.device-id').text(id);
   var h = cell.html();
   cell.html(h + '<span class="oi oi-' + icon.get(type) +  '">');
   cell.css("padding-top", "0");
+
+
+/*  var cell = $('tr').eq(y).children().eq(x);
+  cell.find('.device-id').text(id);
+  var h = cell.html();
+  cell.html(h + '<span class="oi oi-' + icon.get(type) +  '">');
+  cell.css("padding-top", "0"); */
 }
 
 function getDevices() {
@@ -135,6 +149,7 @@ function getDevices() {
       drawDevice(p.type, p.x, p.y, p.ID);
     }
     buildDevicesTable(placed);
+    fieldTemplate = $('.field').replaceWith(fieldTemplate);
   });
 }
 
@@ -148,29 +163,36 @@ function clear() {
   }
 }
 
-clearFieldTemplate() {
+function clearFieldTemplate() {
   for(i = 0; i < 10; i++) {
     for(j = 0; j < 8; j++) {
       var cell = fieldTemplate.find('tr').eq(j).children().eq(i);
+      cell.removeClass('sensor');
+      cell.removeClass('device');
       cell.html("<span class='sensor-id'></span><span class='device-id'></span>");
       cell.css('background-color', '');
     }
   }
 }
 
+
+var f;
 function upd() {
-  getSensors();
-  getDevices();
   clearFieldTemplate();
-  setTimeout(upd, 200);
+  getSensors();
+
+
+  setTimeout(upd, 2000);
 }
 
 function abs(a) {
   return a >= 0 ? a : -a;
 }
 
+var fieldTemplate;
+
 $(document).ready(function() {
   clear();
-  fieldTemplate = field.clone();
+  fieldTemplate = $('.field').clone();
   upd();
 });
