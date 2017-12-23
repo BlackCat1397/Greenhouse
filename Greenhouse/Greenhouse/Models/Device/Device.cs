@@ -16,7 +16,7 @@ namespace Greenhouse.Models.Equipment
     private int _id;
     private int _x;
     private int _y;
-    string type;
+    private string type;
     private bool placed;
     private bool on;
     private string targetParamType;
@@ -30,12 +30,14 @@ namespace Greenhouse.Models.Equipment
       this.TargetParamType = t;
     }
 
-    public int X {
+    public int X
+    {
       get => _x;
     }
 
-    public int Y {
-      get => _y; 
+    public int Y
+    {
+      get => _y;
     }
 
     public int ID
@@ -48,12 +50,15 @@ namespace Greenhouse.Models.Equipment
       get => placed;
     }
 
-    public bool On {
+    public bool On
+    {
       get;
     }
 
-    public string State {
-      get {
+    public string State
+    {
+      get
+      {
         if (on)
           return "On";
         else
@@ -61,12 +66,21 @@ namespace Greenhouse.Models.Equipment
       }
     }
 
-    public bool Switch(string s) {
+    public bool Switch(string s)
+    {
       if (s == "on")
+      {
+        if (!on)
+          Program.ghs.Log.AddEvent(Program.ghs.Time, "info", this.Type + " " + this.ID + " switched <span class='state state-on'>on</span>.");
         on = true;
+      }
       else
+      {
+        if (on)
+          Program.ghs.Log.AddEvent(Program.ghs.Time, "info", this.Type + " " + this.ID + " switched <span class='state state-off'>off</span>.");
         on = false;
-      
+      }
+
       return On;
     }
 
@@ -75,8 +89,71 @@ namespace Greenhouse.Models.Equipment
       placed = true;
       _x = x;
       _y = y;
+      Program.ghs.Log.AddEvent(Program.ghs.Time, "info", this.Type
+                               + " " + this.ID + " placed (" + this._x + ", " + this._y + ").");
       return true;
     }
+
+    private void SensorMsg(string type, bool state, Sensor sens)
+    {
+      string msg = null;
+      string val = Math.Round(sens.Value, 1).ToString();
+      string eType = "warning";
+
+      if (state)
+        switch (type)
+        {
+          case "conditioner":
+            msg = "Too warm(" + val + ").";
+            break;
+          case "heater":
+            msg = "Too cold(" + val + ").";
+            break;
+          case "humidifier":
+            msg = "Too dry.";
+            eType = "alert";
+            break;
+          case "fertilizer":
+            msg = "Low fertilization.";
+            eType = "alert";
+            break;
+          case "lighter":
+            msg = "Too dark.";
+            eType = "alert";
+            break;
+        }
+      else
+        switch (type)
+        {
+        }
+      if (msg != null)
+        Program.ghs.Log.AddEvent(Program.ghs.Time, eType, "Sensor " + sens.ID + " - " + msg);
+    }
+
+    public bool Switch(string s, Sensor sens)
+    {
+      if (s == "on")
+      {
+        if (!on)
+        {
+          SensorMsg(this.Type, true, sens);
+          Program.ghs.Log.AddEvent(Program.ghs.Time, "info", this.Type + " " + this.ID + " switched <span class='state state-on'>on</span>.");
+        }
+        on = true;
+      }
+      else
+      {
+        if (on)
+        {
+          SensorMsg(this.Type, false, sens);
+          Program.ghs.Log.AddEvent(Program.ghs.Time, "info", this.Type + " " + this.ID + " switched <span class='state state-off'>off</span>.");
+        }
+        on = false;
+      }
+
+      return On;
+    }
+
 
     public bool Unplace()
     {
@@ -93,9 +170,10 @@ namespace Greenhouse.Models.Equipment
       set => type = value;
     }
 
-    public string TargetParamType {
+    public string TargetParamType
+    {
       get => targetParamType;
-      set 
+      set
       {
         switch (value)
         {
@@ -135,7 +213,7 @@ namespace Greenhouse.Models.Equipment
 
     public void Work()
     {
-      if (type == "fertilizer") 
+      if (type == "fertilizer")
         Console.WriteLine("!");
       if (on)
         for (int i = 0; i < Field.Field.width; i++)

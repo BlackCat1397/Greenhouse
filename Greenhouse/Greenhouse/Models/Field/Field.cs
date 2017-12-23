@@ -48,8 +48,8 @@ namespace Greenhouse.Models.Field
       devices.Add(new Device("fertilizer"));
       devices.Add(new Device("humidifier"));
 
-      PlaceSensor(sensors.Find(s => s.ID == 0), 9, 3);
-      PlaceSensor(sensors.Find(s => s.ID == 1), 2, 2);
+      //PlaceSensor(sensors.Find(s => s.ID == 0), 9, 3);
+      //PlaceSensor(sensors.Find(s => s.ID == 1), 2, 2);
 
       for (int i = 0; i < width; i++)
         for (int j = 0; j < length; j++)
@@ -94,7 +94,9 @@ namespace Greenhouse.Models.Field
       if (dev != null)
       {
         if (PlaceDevice(dev, x, y))
+        {
           return dev;
+        }
         else
           return null;
       }
@@ -279,7 +281,7 @@ namespace Greenhouse.Models.Field
           Sensor sens = SensorsField[i, j];
           if (sens != null && sens.Param == type && sens.Dist(i, j) < dist)
           {
-            dist = sens.Dist(i, j);
+            dist = sens.Dist(x, y);
             res = sens;
           }
           //res = SensorsField[i, j];

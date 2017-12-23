@@ -60,6 +60,10 @@ namespace Greenhouse.Models.Equipment
       placed = true;
       _x = x;
       _y = y;
+      TimeSpan t = Program.ghs.Time;
+      Program.ghs.Log.AddEvent(t, "info", this.Param
+                               + " sensor " + this.ID + " placed (" + this._x + ", " + this._y + ").");
+
       return true;
     }
 

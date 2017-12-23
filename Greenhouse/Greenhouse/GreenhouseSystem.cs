@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Greenhouse.Models.Plan;
 using Greenhouse.Models.Equipment;
 using Greenhouse.Models.Field;
+using Greenhouse.Models.Log;
 
 namespace Greenhouse.System
 {
@@ -21,12 +22,16 @@ namespace Greenhouse.System
     private List<Plan> plans;
     private TimeSpan time;
     private Timer timer;
+    private Log log;
+    private double delta = 0.39999;
 
     public GreenhouseSystem() {
       _currentPeriod = null;
       plans = new List<Plan>();
-      field = new Field();
       time = new TimeSpan();
+      log = new Log();
+      field = new Field();
+
 
       timer = new Timer();
       InitTimer();
@@ -36,7 +41,8 @@ namespace Greenhouse.System
       Plan pl = new Plan();
       plans.Add(pl);
       ActivatePlan(pl.ID);
-
+      log.AddEvent(time, "info", "System configured.");
+                   
       return true;
     }
 
@@ -46,7 +52,7 @@ namespace Greenhouse.System
       _currentPeriod = _currentPlan.GetCurrentPeriod(time);
       Console.WriteLine("1337 5|>34|<");
       Console.WriteLine("Time {0}, id {1}", time.ToString(), _currentPeriod.ID);
-      time += new TimeSpan(0, 30, 0);
+      time += new TimeSpan(0, 0, 5);
       SetDevices();
       field.Work();
     }
@@ -57,48 +63,65 @@ namespace Greenhouse.System
       List<Device> devices = field.GetPlacedDevicesList;
       foreach (Device d in devices) {
         Sensor nearest = field.GetNearestSensor(d.X, d.Y, d.TargetParamType);
-        if (nearest != null) {
+        if (nearest != null)
+        {
           switch (d.Type)
           {
             case "conditioner":
-              if (nearest.Value > Ok.AirTemperature)
-                d.Switch("on");
+              if (nearest.Value > Ok.AirTemperature + delta)
+              {
+                d.Switch("on", nearest);
+              }
               else
-                d.Switch("off");
+                if (nearest.Value < Ok.AirTemperature + delta)
+              {
+                d.Switch("off", nearest);
+              }
               break;
 
             case "heater":
-              if (nearest.Value < Ok.AirTemperature)
-                d.Switch("on");
+              if (nearest.Value < Ok.AirTemperature - delta)
+              {
+                d.Switch("on", nearest);
+              }
               else
+              {
                 d.Switch("off");
+              }
               break;
 
             case "lighter":
-              if (nearest.Value < Ok.Lighting)
-                d.Switch("on");
+              if (nearest.Value < Ok.Lighting - delta * 20)
+                d.Switch("on", nearest);
               else
-                d.Switch("off");
+                if (nearest.Value > Ok.Lighting + delta * 20)
+                d.Switch("off", nearest);
               break;
 
             case "fertilizer":
-              if (nearest.Value < Ok.Fertilization)
-                d.Switch("on");
+              if (nearest.Value < Ok.Fertilization - delta)
+                d.Switch("on", nearest);
               else
                 d.Switch("off");
               break;
 
             case "humidifier":
-              if (nearest.Value < Ok.Humidity)
-                d.Switch("on");
+              if (nearest.Value < Ok.Humidity - delta)
+              {
+                d.Switch("on", nearest);
+              }
               else
+              {
                 d.Switch("off");
+              }
               break;
 
             default:
               return;
           }
         }
+        else
+          d.Switch("off");
       }
     }
 
@@ -111,12 +134,22 @@ namespace Greenhouse.System
 
     public void Start() {
       timer.Enabled = true;
+      log.AddEvent(time, "info", "\\\"" + _currentPlan.Name + "\\\" started.");
     }
 
     public void Stop()
     {
       timer.Enabled = false;
       timer.Stop();
+      log.AddEvent(time, "info", "System stoped");
+    }
+
+    public Log Log{
+      get => log;
+    }
+
+    public TimeSpan Time {
+      get => time;
     }
 
     public Plan AddPlan() {

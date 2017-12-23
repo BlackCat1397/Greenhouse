@@ -33,13 +33,13 @@
             <li class="nav-item" id="Status-Index">
               <a class="nav-link" href="/Status/">Status</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="History">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 History
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="../spectrate/plots.html">Plots</a>
-                <a class="dropdown-item" href="../spectrate/log.html">Log</a>
+                <a class="dropdown-item" href="/History/Plots" id="History-Plots">Plots</a>
+                <a class="dropdown-item" href="/History/Log" id="History-Log">Log</a>
               </div>
             </li>
             <li class="nav-item" id="Plans-Status">
@@ -74,7 +74,8 @@
 	
 
   <script>
-    $("li#@(ViewContext.RouteData.Values["Controller"])-@(ViewContext.RouteData.Values["Action"])").addClass("active");
+    $("#@(ViewContext.RouteData.Values["Controller"])-@(ViewContext.RouteData.Values["Action"])").addClass("active");
+    $("li#@ViewBag.MenuItem").addClass("active");
 		console.log("@(ViewContext.RouteData.Values["Controller"])");
   </script>
 </html>

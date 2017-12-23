@@ -26,8 +26,13 @@ $('#page-container').children().first().prepend(div);
 
 
 function placeSensor(type) {
+  
+
+  $('td').off('click');
+  $('tbody').off('click', '.sensor', deleteSensor);
+  $('tbody').off('click', 'span.oi', deleteDevice);
+
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки
-    $('td').off('click');
     var x = $(this).index();          //($this) – ячейка, на которую кликнули, .index() – её номер
     var y = $(this).parent().index()  //.parent() – то, в чем она лежит
 
@@ -40,6 +45,8 @@ function placeSensor(type) {
       drawSensor(sensor.type, sensor.x, sensor.y);
       var q =  $('#' + sensor.type + '-unplaced').text();
       $('#' + sensor.type + '-unplaced').text(q-1);
+      $('tbody').on('click', '.sensor', deleteSensor);
+      $('tbody').on('click', 'span.oi', deleteDevice);
     });
 
     $('td').off('click');
@@ -49,7 +56,7 @@ function placeSensor(type) {
 
 
 function deleteSensor(e) {
-  if(!confirm('Delete?')) {
+  if(!confirm('Delete sensor?')) {
     return false;
   }
 
@@ -102,6 +109,8 @@ function getSensors() {
 function placeDevice(type) {
   //alert("Add " + type);
   $('td').off('click');
+  $('tbody').off('click', '.sensor', deleteSensor);
+  $('tbody').off('click', 'span.oi', deleteDevice);
 
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки
     var x = $(this).index();          //($this) – ячейка, на которую кликнули, .index() – её номер
@@ -117,6 +126,8 @@ function placeDevice(type) {
       drawDevice(type, x, y);
       var q =  $('#' + device.type + '-unplaced').text();
       $('#' + device.type + '-unplaced').text(q-1);
+      $('tbody').on('click', '.sensor', deleteSensor);
+      $('tbody').on('click', 'span.oi', deleteDevice);
     });
 
     $('td').off('click');
@@ -124,7 +135,7 @@ function placeDevice(type) {
 }
 
 function deleteDevice(e) {
-  if(!confirm('Delete?')) {
+  if(!confirm('Delete device?')) {
     return false;
   }
 

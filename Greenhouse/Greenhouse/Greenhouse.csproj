@@ -25,6 +25,10 @@
     <Folder Include="Views\Status\" />
     <Folder Include="wwwroot\js\status\" />
     <Folder Include="wwwroot\css\status\" />
+    <Folder Include="Views\History\" />
+    <Folder Include="wwwroot\js\history\" />
+    <Folder Include="Models\Log\" />
+    <Folder Include="wwwroot\css\history\" />
   </ItemGroup>
 
   <ItemGroup>

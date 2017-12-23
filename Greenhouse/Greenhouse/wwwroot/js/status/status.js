@@ -89,7 +89,7 @@ function buildSensorsTable(sensors) {
 
 }
 
-function getSensors() {
+function getSensors(callback) {
   $.get( "/Equipment/GetSensors", function( data ) {
     data = $.parseJSON(data);
     var placed = data.placed;
@@ -98,7 +98,9 @@ function getSensors() {
       drawSensor(p.type, p.x, p.y, p.ID);
     }
     buildSensorsTable(placed);
-    getDevices();
+    if(typeof callback === "function") {
+      callback();
+    }
   });
 }
 
@@ -136,7 +138,7 @@ function drawDevice(type, x, y, id) {
   cell.css("padding-top", "0"); */
 }
 
-function getDevices() {
+function getDevices(callback) {
   $.get( "/Equipment/GetDevices", function( data ) {
     data = $.parseJSON(data);
     var placed = data.placed;
@@ -149,7 +151,11 @@ function getDevices() {
       drawDevice(p.type, p.x, p.y, p.ID);
     }
     buildDevicesTable(placed);
-    fieldTemplate = $('.field').replaceWith(fieldTemplate);
+
+
+    if(typeof callback === "function") {
+      callback();
+    }
   });
 }
 
@@ -179,8 +185,11 @@ function clearFieldTemplate() {
 var f;
 function upd() {
   clearFieldTemplate();
-  getSensors();
-
+  getSensors(function() {
+    getDevices(function() {
+      fieldTemplate = $('.field').replaceWith(fieldTemplate);
+    });
+  });
 
   setTimeout(upd, 2000);
 }
