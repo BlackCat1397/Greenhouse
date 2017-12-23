@@ -31,5 +31,9 @@ namespace Greenhouse.Controllers
     {
       return Program.ghs.Log.UnseenToJson();
     }
+
+    public void MarkSeen(){
+      Program.ghs.Log.MarkSeen();
+    }
   }
 }

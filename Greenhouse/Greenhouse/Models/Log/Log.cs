@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Greenhouse.Models.Log
 {
-  public struct Event
+  public class Event
   {
     public TimeSpan time;
     public string type;
@@ -22,7 +22,6 @@ namespace Greenhouse.Models.Log
 
     public string EventToJson(Event e)
     {
-      e.seen = true;
       string res = "{";
       res += "\"time\":\"" + e.time.ToString() + "\"";
       res += ", \"type\":\"" + e.type + "\"";
@@ -85,7 +84,16 @@ namespace Greenhouse.Models.Log
 
     public void MarkSeen()
     {
-      
+      events.ForEach(x => x.seen = true);
+      //for (int i = 0; i < unseen.Count; i++) {
+      //  Event e = new Event();
+      //  e.data = unseen[i].data;
+      //  e.seen = true;
+      //  e.time = unseen[i].time;
+      //  e.type = unseen[i].type;
+
+      //  unseen[i] = e;
+      //}; 
     }
   }
 }

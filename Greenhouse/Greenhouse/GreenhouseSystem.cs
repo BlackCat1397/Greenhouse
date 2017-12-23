@@ -52,13 +52,14 @@ namespace Greenhouse.System
       _currentPeriod = _currentPlan.GetCurrentPeriod(time);
       Console.WriteLine("1337 5|>34|<");
       Console.WriteLine("Time {0}, id {1}", time.ToString(), _currentPeriod.ID);
-      time += new TimeSpan(0, 0, 5);
+      time += new TimeSpan(0, 30, 0);
       SetDevices();
       field.Work();
     }
 
     private void SetDevices() {
       Parameters Ok = new Parameters(25, 23, 10, 60, 80, 42);
+      //TODO randomize params
       Ok = _currentPeriod.Params;
       List<Device> devices = field.GetPlacedDevicesList;
       foreach (Device d in devices) {
@@ -129,7 +130,7 @@ namespace Greenhouse.System
       // Tell the timer what to do when it elapses
       timer.Elapsed += new ElapsedEventHandler(work);
       // Set it to go off every five seconds
-      timer.Interval = 3000;
+      timer.Interval = 5000;
     }
 
     public void Start() {
@@ -142,6 +143,12 @@ namespace Greenhouse.System
       timer.Enabled = false;
       timer.Stop();
       log.AddEvent(time, "info", "System stoped");
+    }
+
+    public void Reset()
+    {
+      Stop();
+      time = new TimeSpan(0, 0, 0);
     }
 
     public Log Log{

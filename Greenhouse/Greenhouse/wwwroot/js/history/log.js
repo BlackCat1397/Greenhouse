@@ -18,7 +18,7 @@ function drawEvent(e) {
 
 function getLog() {
   $.get( "/History/GetLog", function( data ) {
-
+    $.get('/History/MarkSeen');
     //alert(data);
     data = $.parseJSON(data);
     data = data.events;

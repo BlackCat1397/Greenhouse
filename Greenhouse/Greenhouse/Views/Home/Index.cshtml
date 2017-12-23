@@ -1,11 +1,10 @@
 ﻿@{
   Layout = "_Layout";
+  ViewBag.Title = "Greenhouse-systems";
   ViewBag.MenuItem = "Home";
 
+
   @section Scripts {
-    <script>
-      
-    </script>
     <script type="text/javascript" src="/js/home.js"></script>
   };
 }
@@ -21,10 +20,34 @@
     <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">Notifications <span class="notifications-counter alert-danger" id="counter">2</span></a>
   </li>
 </ul>
+
 <div class="tab-content" id="mainTabContent">
   <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
-    sdrghjlk
+    <div class="row">
+      <div class="col-md-6">
+        Welcome to Greenhouse Systems!
+        <br>
+        Our system is designed to simplify the cultivation of different crops. 
+        <br>
+        In the <b>Notifications</b> section, you can see what happened after you last logged in.
+        <br>
+        The <b>Status</b> section displays the current status of all sensors and devices in the system.
+        <br>
+        If you want to see the history of the system, then you can select the sections <b>History - Log</b>.
+        <br>
+        The <b>Plans</b> section contains the current and all available plans for growing different crops.
+        <br>
+        And all available and located equipment you can see in the <b>Equipment</b> section.
+        <br>
+        Enjoy our cooperation.
+      </div>
+      <div class="col-md-6">
+        <img src="https://pp.userapi.com/c836132/v836132735/666e5/Okjd0NaFQVU.jpg">
+      </div>
+    </div>
   </div>
+
+  
   <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
     <table class="table table-striped ">
       <tbody>
