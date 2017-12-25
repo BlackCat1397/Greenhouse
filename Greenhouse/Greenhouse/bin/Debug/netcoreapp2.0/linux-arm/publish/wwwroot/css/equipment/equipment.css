@@ -65,9 +65,12 @@ span.oi-dashboard {
   border-color: green;
 }
 
+
+
 .oi:empty:before {
   margin-left: -1px;
 }
+
 
 .oi-sun {
   color: #fff04e;

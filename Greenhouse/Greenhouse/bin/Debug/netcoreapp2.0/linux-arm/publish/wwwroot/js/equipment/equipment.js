@@ -26,8 +26,13 @@ $('#page-container').children().first().prepend(div);
 
 
 function placeSensor(type) {
+  
+
+  $('td').off('click');
+  $('tbody').off('click', '.sensor', deleteSensor);
+  $('tbody').off('click', 'span.oi', deleteDevice);
+
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки
-    $('td').off('click');
     var x = $(this).index();          //($this) – ячейка, на которую кликнули, .index() – её номер
     var y = $(this).parent().index()  //.parent() – то, в чем она лежит
 
@@ -40,6 +45,8 @@ function placeSensor(type) {
       drawSensor(sensor.type, sensor.x, sensor.y);
       var q =  $('#' + sensor.type + '-unplaced').text();
       $('#' + sensor.type + '-unplaced').text(q-1);
+      $('tbody').on('click', '.sensor', deleteSensor);
+      $('tbody').on('click', 'span.oi', deleteDevice);
     });
 
     $('td').off('click');
@@ -49,7 +56,7 @@ function placeSensor(type) {
 
 
 function deleteSensor(e) {
-  if(!confirm('Delete?')) {
+  if(!confirm('Delete sensor?')) {
     return false;
   }
 
@@ -81,7 +88,6 @@ function drawSensor(type, x, y) {
   cell.addClass('sensor');
 }
 
-
 function getSensors() {
   $.get( "/Equipment/GetSensors", function( data ) {
     data = $.parseJSON(data);
@@ -101,8 +107,10 @@ function getSensors() {
 
 
 function placeDevice(type) {
-  alert("Add " + type);
+  //alert("Add " + type);
   $('td').off('click');
+  $('tbody').off('click', '.sensor', deleteSensor);
+  $('tbody').off('click', 'span.oi', deleteDevice);
 
   $('td').on('click', function(e) {   //обработчик кликов для каждой ячейки
     var x = $(this).index();          //($this) – ячейка, на которую кликнули, .index() – её номер
@@ -118,11 +126,38 @@ function placeDevice(type) {
       drawDevice(type, x, y);
       var q =  $('#' + device.type + '-unplaced').text();
       $('#' + device.type + '-unplaced').text(q-1);
+      $('tbody').on('click', '.sensor', deleteSensor);
+      $('tbody').on('click', 'span.oi', deleteDevice);
     });
 
     $('td').off('click');
   });
 }
+
+function deleteDevice(e) {
+  if(!confirm('Delete device?')) {
+    return false;
+  }
+
+  var x = $(this).parent().index();          //($this) – ячейка, на которую кликнули, .index() – её номер
+  var y = $(this).parent().parent().index()  //.parent() – то, в чем она лежит
+  var cell = $(this).parent();
+
+  $.ajax({
+    url: '/Equipment/UnplaceDevice/',
+    data: 'x=' + x + '&y=' + y,
+    type: 'DELETE',
+    success: function(resp) {
+          
+          var q =  $('#' + resp + '-unplaced').text();
+          $('#' + resp + '-unplaced').text(parseInt(q)+1);
+          cell.html("");
+          cell.removeClass("device");
+    },
+    error: function(){alert('Something goes wrong! Try again.');}
+  });
+}
+
 
 function drawDevice(type, x, y) {
   var icon = [["lighter", "sun"], ["conditioner", "cloud"], ["heater", "fire"], ["fertilizer", "beaker"], ["humidifier", "droplet"]];
@@ -193,5 +228,5 @@ $('#add-humidifier').on('click', function(e) {
 
 
 $('tbody').on('click', '.sensor', deleteSensor);
-$('tbody').on('click', 'span.oi', deleteSensor);
+$('tbody').on('click', 'span.oi', deleteDevice);
 

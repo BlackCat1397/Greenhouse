@@ -74,6 +74,7 @@ function addPlan(data) {
       var cells = tbody.find('tr').eq(i).children();
       var per = periods[i];
 
+      cells.find('.oi-bolt').data('plan-id', plan.ID);
       cells.find('.oi-pencil').data('plan-id', plan.ID);
       cells.find('.oi-trash').data('plan-id', plan.ID);
       cells.find('.oi').data('period-id', per.ID);
@@ -102,6 +103,13 @@ function addPlan(data) {
 }
 
 
+function activatePlan() {
+  var id = $(this).data('plan-id');
+  if(confirm("You are going to activate plan " + id + ". This will deactivate current plan. Are you sure?")) {
+    $.post('/Plans/ActivatePlan/' + id, function(data, textStatus, jqXHR){
+    }).fail(function(){alert('Something goes wrong! Try again.');});
+  }
+}
 
 function deletePlan() {
   var id = $(this).data('plan-id');
@@ -217,6 +225,7 @@ $('#add-plan').on('click', function(e){
 });
 $("#page-container").on("click", ".oi-trash.oi--plan", deletePlan);
 $("#page-container").on("click", ".oi-pencil.oi--plan", activateInput);
+$("#page-container").on("click", ".oi-bolt.oi--plan", activatePlan);
 $("#page-container").on("click", ".add-per-btn", addPeriod);
 $('input[type="text"]').keypress(resizeInput);
 
