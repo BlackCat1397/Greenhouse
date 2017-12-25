@@ -17,7 +17,7 @@ namespace Greenhouse.Models.Plan
     {
       beginning = new DateTime(2000, 1, 1);
       end = new DateTime(2000, 1, 24);
-      this.Name = "PeR";
+      this.Name = "New period";
       _params = new Parameters();
       _id = id++;
     }
@@ -26,7 +26,7 @@ namespace Greenhouse.Models.Plan
     {
       this.beginning = beginning;
       this.end = end;
-      this.Name = "PeRiOd";
+      this.Name = "New period";
       this.Params = new Parameters();
       this._id = id++;
     }

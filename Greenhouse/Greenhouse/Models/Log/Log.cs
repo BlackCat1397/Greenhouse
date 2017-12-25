@@ -24,6 +24,7 @@ namespace Greenhouse.Models.Log
     {
       string res = "{";
       res += "\"time\":\"" + e.time.ToString() + "\"";
+      res += ", \"sysTime\":\"" + Program.ghs.SystemTime.ToString() + "\"";
       res += ", \"type\":\"" + e.type + "\"";
       res += ", \"data\":\"" + e.data + "\"";
 

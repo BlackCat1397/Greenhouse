@@ -21,6 +21,7 @@ namespace Greenhouse.System
     public Field field;
     private List<Plan> plans;
     private TimeSpan time;
+    private TimeSpan systemTime;
     private Timer timer;
     private Log log;
     private double delta = 0.39999;
@@ -29,6 +30,7 @@ namespace Greenhouse.System
       _currentPeriod = null;
       plans = new List<Plan>();
       time = new TimeSpan();
+      systemTime = new TimeSpan();
       log = new Log();
       field = new Field();
 
@@ -53,6 +55,7 @@ namespace Greenhouse.System
       Console.WriteLine("1337 5|>34|<");
       Console.WriteLine("Time {0}, id {1}", time.ToString(), _currentPeriod.ID);
       time += new TimeSpan(0, 30, 0);
+      systemTime += new TimeSpan(0, 30, 0);
       SetDevices();
       field.Work();
     }
@@ -157,6 +160,11 @@ namespace Greenhouse.System
 
     public TimeSpan Time {
       get => time;
+    }
+
+    public TimeSpan SystemTime
+    {
+      get => systemTime;
     }
 
     public Plan AddPlan() {

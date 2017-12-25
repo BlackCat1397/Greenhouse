@@ -27,10 +27,13 @@ namespace Greenhouse.Controllers
       return View(plans);
     }
 
-    [HttpGet]
+    [HttpPost]
     public string ActivatePlan(int id)
     {
-      return Program.ghs.ActivatePlan(id).ToString();
+      Program.ghs.Reset();
+      string r = Program.ghs.ActivatePlan(id).ToString();
+      Program.ghs.Start();
+      return r;
     }
 
     [HttpPost]
