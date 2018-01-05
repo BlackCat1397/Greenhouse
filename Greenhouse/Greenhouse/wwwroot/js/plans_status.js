@@ -179,7 +179,10 @@ function addPeriodToPage(data, plan_id) {
 function replacePeriod(data, period_id) {
   per = $.parseJSON(data);
 
-  var cells = $("span").filter("[data-period-id='" + period_id + "']").first().parent().parent().children();
+  //var cells = $("span").filter("[data-period-id='" + period_id + "']").first().parent().parent().children();
+  var cells = $("span").filter(function() { 
+    return $(this).data("period-id") == period_id; 
+  }).first().parent().parent().children();
   cells.eq(0).text(per.Name);
   cells.eq(1).text(per.Duration);
 
