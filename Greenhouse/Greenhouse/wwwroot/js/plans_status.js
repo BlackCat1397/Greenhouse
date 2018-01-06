@@ -90,7 +90,11 @@ function addPlan(data) {
     }
   }
 
+
+  res.find('#timeline-template').attr('id', 'timeline-' + plan.ID);
+
   res.show();
+  drawChart(plan.ID);
   setupSlip(tbody[0]);
   
   var inputSize = span.width() + 6;
@@ -148,6 +152,7 @@ function addPeriod() {
 
   $.post('/Plans/AddPeriod?id=' + plan_id, function(data, textStatus, jqXHR){
     addPeriodToPage(data, plan_id);
+    drawChart(plan_id);
   }).fail(function(){alert('Something goes wrong! Try again.')});
 };
 
@@ -215,6 +220,7 @@ function deletePeriod(e) {
     var plan_id = $(e.target).data('plan-id');
     $.post('/Plans/DeletePeriod?plan_id=' + plan_id + '&period_id=' + period_id, function(data, textStatus, jqXHR){
       tr.parentNode.removeChild(tr);
+      drawChart(plan_id);
     }).fail(function(){alert('Something goes wrong! Try again.')});
   }
 }
@@ -292,6 +298,7 @@ function setupSlip(list) {
                         alert('FATAL ERRORS OCCURED! RELOAD PAGE IMMEDIATTELY!')
                       });
       e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
+      drawChart(plan_id);
       flag_dragging = false;
       return false;
   }, false);
@@ -303,11 +310,13 @@ $('#edit-period-form').on('submit', function(e) {
 
   var form_data = $('#edit-period-form').serialize();
   var period_id = $('#periodModal').data('period-id');
+  var plan_id = $('#periodModal').data('plan-id');
   form_data += "&period_id=" + period_id;
-  form_data += "&plan_id=" + $('#periodModal').data('plan-id');
+  form_data += "&plan_id=" + plan_id;
 
   $.post('/Plans/EditPeriod', form_data).done(function(data){
     replacePeriod(data, period_id);
+    drawChart(plan_id);
     $('#periodModal').modal('hide');
   }).fail(function() {alert('Something goes wrong! Try again.')});
 });

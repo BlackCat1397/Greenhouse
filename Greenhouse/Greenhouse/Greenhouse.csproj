@@ -29,6 +29,8 @@
     <Folder Include="wwwroot\js\history\" />
     <Folder Include="Models\Log\" />
     <Folder Include="wwwroot\css\history\" />
+    <Folder Include="wwwroot\js\plans\" />
+    <Folder Include="wwwroot\css\plans\" />
   </ItemGroup>
 
   <ItemGroup>

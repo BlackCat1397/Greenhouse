@@ -11,11 +11,18 @@
   ViewBag.MenuItem = "Plans";
   Layout = "_Layout";
 
+  @section Styles {
+    <link rel="stylesheet" href="/css/plans/plans.css">
+  }
+
   @section Scripts {
     <script type="text/javascript" src="/js/slip.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="/js/plans/charts.js"></script>
     <script type="text/javascript" src="/js/plans_status.js"></script>
   };
 }
+
 
 
 <h1>Plans <span class="oi oi-plus oi--plan" title="plus" aria-hidden="true" id="add-plan"></span></h1>
@@ -67,7 +74,10 @@
 				<button type="button" class="btn btn-success add-per-btn" data-plan-id="@plan.ID" style="width: 100%">Add period</button>
       </div>
     </div>
-    <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
+    <div class="col-xl-4">
+      
+      <div id="timeline-@plan.ID" class="timeline" style="max-width: 100%; height: auto;"></div>
+    </div>
   </div>
 </div>
 }
@@ -117,7 +127,9 @@
         <button type="button" class="btn btn-success add-per-btn" data-plan-id="" style="width: 100%">Add period</button>
       </div>
     </div>
-    <div class="col-xl-4"><img class="img-fluid img-plan" src="/img/Charts/chart1.png"></div>
+    <div class="col-xl-4">
+      <div id="timeline-template" class="timeline" style="max-width: 100%; height: auto;"></div>
+    </div>
   </div>
 </div>
 
