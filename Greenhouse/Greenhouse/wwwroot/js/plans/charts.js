@@ -83,11 +83,24 @@ function drawChart(plan_id) {
     var seconds = duration % 60;
 
 
+    var bdays = parseInt( dataTable.getValue(i, 3) / 3600 / 24); 
+    var bhours = parseInt( dataTable.getValue(i, 3) / 3600 ) % 24;
+
+    var edays = parseInt( dataTable.getValue(i, 4) / 3600 / 24); 
+    var ehours = parseInt( dataTable.getValue(i, 4) / 3600 ) % 24;
+    bdays /= 1000;
+    edays /= 1000;
+    bhours /= 1000;
+    ehours /= 1000;
+
+
     var tooltip = '<div class="ggl-tooltip"><span>' +
       dataTable.getValue(i, 1) + '</span></div>' + 
       '<div class="ggl-tooltip">' +
-      dataTable.getValue(i, 3)/1000/3600 + ' - ' +
-      dataTable.getValue(i, 4)/1000/3600 + '</div>' +
+      //dataTable.getValue(i, 3)/1000/3600 + ' - ' +
+      //dataTable.getValue(i, 4)/1000/3600 + '</div>' +
+      bdays + 'd ' + bhours +'h - ' + 
+      edays +'d '+ ehours +'h </div>'+
       '<div class="ggl-tooltip"><span>Duration: ' +
       days + 'd ' + hours + 'h</span></div>' +
       '<div class="ggl-tooltip"><span>Air temperature: ' +
